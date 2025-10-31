@@ -28,7 +28,9 @@ public class Sistema {
         this.listaAreas.agregarArea(area);
     }
     
-    
+    public void agregarManager(Manager manager){
+        this.listaPersonas.agregarManager(manager);
+    }
     
     public void agregarEmpleado(Empleado empleado, Area area){
         

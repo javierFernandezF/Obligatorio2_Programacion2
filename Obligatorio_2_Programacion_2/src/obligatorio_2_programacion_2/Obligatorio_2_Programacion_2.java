@@ -34,7 +34,7 @@ public class Obligatorio_2_Programacion_2 {
         TimerTask pantallaDeInicio = new TimerTask() {
             @Override
             public void run() {
-            java.awt.EventQueue.invokeLater(() -> new VentanaInicio().setVisible(true));
+            java.awt.EventQueue.invokeLater(() -> new VentanaInicio(sistema).setVisible(true));
             ventanaPresentacion.setVisible(false);         
                 
             }

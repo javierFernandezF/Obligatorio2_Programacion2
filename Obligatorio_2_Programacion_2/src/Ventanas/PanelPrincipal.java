@@ -4,18 +4,21 @@
  */
 package Ventanas;
 
+import Sistema.Sistema;
+
 /**
  *
  * @author javierfernandez
  */
 public class PanelPrincipal extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PanelPrincipal.class.getName());
+    private Sistema sistema;
+    //private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PanelPrincipal.class.getName());
 
     /**
      * Creates new form panelPrincipal
      */
-    public PanelPrincipal() {
+    public PanelPrincipal(Sistema sistema) {
+        this.sistema = sistema;
         initComponents();
     }
 
@@ -140,9 +143,10 @@ public class PanelPrincipal extends javax.swing.JFrame {
 
     private void MenuAreaAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAreaAltaActionPerformed
 
-    java.awt.EventQueue.invokeLater(() -> new VentanaAreaAlta().setVisible(true));
-
-
+    java.awt.EventQueue.invokeLater(() -> new VentanaAreaAlta(sistema).setVisible(true));
+     
+    
+    
 
         // TODO add your handling code here:
     }//GEN-LAST:event_MenuAreaAltaActionPerformed

@@ -11,9 +11,9 @@ package Dominio.Personas;
 public class Persona {
     private String nombre;
     private int cedula;
-    private int celular;
+    private String celular;
 
-    public Persona(String nombre, int cedula, int celular) {
+    public Persona(String nombre, int cedula, String celular) {
         this.nombre = nombre;
         this.cedula = cedula;
         this.celular = celular;
@@ -29,7 +29,7 @@ public class Persona {
         return cedula;
     }
 
-    public int getCelular() {
+    public String getCelular() {
         return celular;
     }
 

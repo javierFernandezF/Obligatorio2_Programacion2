@@ -11,13 +11,14 @@ import Sistema.Sistema;
  * @author javierfernandez
  */
 public class VentanaAreaAlta extends javax.swing.JFrame {
-    
+    private Sistema sistema;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaAreaAlta.class.getName());
 
     /**
      * Creates new form VentanaAreaAlta
      */
-    public VentanaAreaAlta() {
+    public VentanaAreaAlta(Sistema sistema) {
+        this.sistema = sistema;
         initComponents();
     }
 
@@ -38,12 +39,12 @@ public class VentanaAreaAlta extends javax.swing.JFrame {
         areaAltaInputNombre = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         areaAltaInputDescipcion = new javax.swing.JTextArea();
-        areaAltaInputPresupuesto = new javax.swing.JFormattedTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
         btnAgregarArea = new javax.swing.JButton();
+        areaAltaInputPresupuesto = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lbAreaAlta.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
         lbAreaAlta.setText("Área Alta");
@@ -58,11 +59,6 @@ public class VentanaAreaAlta extends javax.swing.JFrame {
         areaAltaInputDescipcion.setRows(5);
         jScrollPane1.setViewportView(areaAltaInputDescipcion);
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane2.setViewportView(jList1);
 
         btnAgregarArea.setText("Agregar área");
@@ -85,15 +81,15 @@ public class VentanaAreaAlta extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(9, 9, 9)
                                 .addComponent(lbAreaAlta))
-                            .addComponent(jLabel3)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lbPresupuestoArea)
-                                    .addComponent(lbNombreArea))
+                                    .addComponent(lbNombreArea)
+                                    .addComponent(jLabel3))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(areaAltaInputPresupuesto)
-                                    .addComponent(areaAltaInputNombre)))))
+                                    .addComponent(areaAltaInputNombre)
+                                    .addComponent(areaAltaInputPresupuesto)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(56, 56, 56)
                         .addComponent(btnAgregarArea)))
@@ -146,9 +142,27 @@ public class VentanaAreaAlta extends javax.swing.JFrame {
 
     private void btnAgregarAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarAreaActionPerformed
         
-        //Area area = new Area(areaAltaInputNombre.toString(),areaAltaInputDescipcion.toString() , (int) areaAltaInputPresupuesto);
-        
-        sistema.
+        try{
+            
+             String nombre = areaAltaInputNombre.getText();
+             String descripcion = areaAltaInputDescipcion.getText();
+             double presupuesto = Double.parseDouble(areaAltaInputPresupuesto.getText());
+             
+             
+             Area area = new Area(nombre, descripcion, presupuesto);
+             this.sistema.agregarArea(area);
+             
+             
+             
+             areaAltaInputNombre.setText("");
+             areaAltaInputDescipcion.setText("");
+             areaAltaInputPresupuesto.setText("");
+             javax.swing.JOptionPane.showMessageDialog(this, "Área agregada exitosamente");  
+             
+        }catch (NumberFormatException e){
+            
+            javax.swing.JOptionPane.showMessageDialog(this, "El presupuesto debe ser un número válido", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
 
 
 
@@ -160,7 +174,7 @@ public class VentanaAreaAlta extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaAltaInputDescipcion;
     private javax.swing.JTextField areaAltaInputNombre;
-    private javax.swing.JFormattedTextField areaAltaInputPresupuesto;
+    private javax.swing.JTextField areaAltaInputPresupuesto;
     private javax.swing.JButton btnAgregarArea;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JList<String> jList1;

@@ -4,18 +4,22 @@
  */
 package Ventanas;
 
+import DatosPrecargados.DatosPrecargados;
+import Sistema.Sistema;
+
 /**
  *
  * @author javierfernandez
  */
 public class VentanaInicio extends javax.swing.JFrame {
-    
+    private Sistema sistema;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaInicio.class.getName());
 
     /**
      * Creates new form ventanaInicio
      */
-    public VentanaInicio() {
+    public VentanaInicio(Sistema sistema) {
+        this.sistema = sistema;
         initComponents();
     }
 
@@ -98,17 +102,27 @@ public class VentanaInicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSistemaGuardadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSistemaGuardadoActionPerformed
+    java.awt.EventQueue.invokeLater(() -> new PanelPrincipal(this.sistema).setVisible(true));
+    this.setVisible(false);
+
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSistemaGuardadoActionPerformed
 
     private void btnSistemaConDatosPrecargadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSistemaConDatosPrecargadosActionPerformed
+    
+    java.awt.EventQueue.invokeLater(() -> new PanelPrincipal(this.sistema).setVisible(true));
+    this.setVisible(false);
+    
+    new DatosPrecargados(this.sistema);
+
+
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSistemaConDatosPrecargadosActionPerformed
 
     private void btnSistemaNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSistemaNuevoActionPerformed
     
       
-    java.awt.EventQueue.invokeLater(() -> new PanelPrincipal().setVisible(true));
+    java.awt.EventQueue.invokeLater(() -> new PanelPrincipal(this.sistema).setVisible(true));
     this.setVisible(false);
 
         // TODO add your handling code here:

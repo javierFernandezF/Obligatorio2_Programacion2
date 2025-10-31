@@ -12,7 +12,7 @@ public class Manager extends Persona {
     
     private int anosDeAntiguedad;
 
-    public Manager(String nombre, int cedula, int celular, int anosDeAntiguedad) {
+    public Manager(String nombre, int cedula, String celular, int anosDeAntiguedad) {
         super(nombre, cedula, celular);
         this.anosDeAntiguedad = anosDeAntiguedad;
     }

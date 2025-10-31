@@ -12,10 +12,10 @@ import java.util.*;
 public class Area {
     private String nombre;
     private String descripcion;
-    private int presupuesto;
+    private double presupuesto;
     private ArrayList<Empleado> listaEmpleados;
 
-    public Area(String nombre, String descripcion, int presupuesto) {
+    public Area(String nombre, String descripcion, double presupuesto) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.presupuesto = presupuesto;
@@ -30,7 +30,7 @@ public class Area {
         return descripcion;
     }
 
-    public int getPresupuesto() {
+    public double getPresupuesto() {
         return presupuesto;
     }
 
