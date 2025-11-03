@@ -4,11 +4,13 @@
  */
 package Dominio.Personas;
 
+import java.util.Observable;
+
 /**
  *
  * @author javierfernandez
  */
-public class Persona {
+public class Persona extends Observable{
     private String nombre;
     private int cedula;
     private String celular;
@@ -33,7 +35,11 @@ public class Persona {
         return celular;
     }
 
-
+    public void setCelular(String celular) {
+        this.celular = celular;
+        setChanged();
+        notifyObservers();
+    }
     
     
     @Override

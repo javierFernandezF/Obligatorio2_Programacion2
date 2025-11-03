@@ -48,8 +48,8 @@ public class VentanaAltaManager extends javax.swing.JFrame implements Observer {
         inputCedulaManager = new javax.swing.JTextField();
         inputCelularManager = new javax.swing.JTextField();
         InputAnosDeAntiguedadManager = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        listaManagers = new javax.swing.JList<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaManager = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Alta Manager");
@@ -74,7 +74,26 @@ public class VentanaAltaManager extends javax.swing.JFrame implements Observer {
             }
         });
 
-        jScrollPane1.setViewportView(listaManagers);
+        tablaManager.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Nombre", "Cédula", "Años de antigüedad", "Celular"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tablaManager);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -105,9 +124,9 @@ public class VentanaAltaManager extends javax.swing.JFrame implements Observer {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(inputCelularManager)
                             .addComponent(InputAnosDeAntiguedadManager))))
-                .addGap(47, 47, 47)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 679, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(37, 37, 37)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 649, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,13 +147,13 @@ public class VentanaAltaManager extends javax.swing.JFrame implements Observer {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbAnosDeAntiguedadManager)
                     .addComponent(InputAnosDeAntiguedadManager, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(43, 43, 43))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -178,21 +197,20 @@ public class VentanaAltaManager extends javax.swing.JFrame implements Observer {
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
     
-    private void actualizarManagers(){
+    public void actualizarManagers() {
+    javax.swing.table.DefaultTableModel modeloTabla = (javax.swing.table.DefaultTableModel) tablaManager.getModel();
+    modeloTabla.setRowCount(0); 
+    
+    for (int i = 0; i < this.sistema.getManagersOrdenados().size(); i++) {
+        Manager manager = this.sistema.getManagersOrdenados().get(i);
         
-        ArrayList<String> datosManagers = new ArrayList<>();
-
-        for(int i = 0; i < this.sistema.getManagersOrdenados().size(); i++){
-          String nombre = this.sistema.getManagersOrdenados().get(i).getNombre();
-          String cedula = String.valueOf(this.sistema.getManagersOrdenados().get(i).getCedula());
-          String celular = this.sistema.getManagersOrdenados().get(i).getCelular();
-          String antiguedad = String.valueOf(this.sistema.getManagersOrdenados().get(i).getAnosDeAntiguedad());
-          
-          datosManagers.add("Nombre: " + nombre + " Cédula: " + cedula + " Celular: " + celular + " Años de antigüedad: " + antiguedad );
-          
+        modeloTabla.addRow(new Object[]{
+            manager.getNombre(),
+            manager.getCedula(),
+            manager.getAnosDeAntiguedad(),
+            manager.getCelular()
+            });
         }
-       
-        listaManagers.setListData(datosManagers.toArray(new String[0]));
     }
     
 
@@ -203,12 +221,12 @@ public class VentanaAltaManager extends javax.swing.JFrame implements Observer {
     private javax.swing.JTextField inputNombreManager;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbAnosDeAntiguedadManager;
     private javax.swing.JLabel lbCedulaManager;
     private javax.swing.JLabel lbCelularManager;
     private javax.swing.JLabel lbNombreManager;
-    private javax.swing.JList<String> listaManagers;
+    private javax.swing.JTable tablaManager;
     // End of variables declaration//GEN-END:variables
     
     //PREGUNTAR EN CLASE!!!

@@ -66,9 +66,17 @@ public class VentanaBajaManager extends javax.swing.JFrame implements Observer {
                 {null, null, null, null}
             },
             new String [] {
-                "Nombre", "Cédula", "Años de antigüedad", "celular"
+                "Nombre", "Cédula", "Años de antigüedad", "Celular"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(tablaManager);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -154,9 +162,9 @@ public class VentanaBajaManager extends javax.swing.JFrame implements Observer {
             manager.getCedula(),
             manager.getAnosDeAntiguedad(),
             manager.getCelular()
-        });
+            });
+        }
     }
-}
     //PREGUNTAR EN CLASE!!!
     @Override
     public void update(Observable o, Object arg) {

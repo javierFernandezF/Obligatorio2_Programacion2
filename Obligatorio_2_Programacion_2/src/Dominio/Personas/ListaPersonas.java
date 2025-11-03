@@ -4,11 +4,13 @@
  */
 package Dominio.Personas;
 import java.util.*;
+import java.util.Observable;
+
 /**
  *
  * @author javierfernandez
  */
-public class ListaPersonas {
+public class ListaPersonas extends Observable{
     private ArrayList<Persona> listaPersonas;
 
     public ListaPersonas() {
@@ -170,6 +172,20 @@ public class ListaPersonas {
         
     public void eliminarManager(Manager manager){
         this.listaPersonas.remove(manager);
+    }
+    
+    public int cantidadDeEmpleadosDeUnManager(Manager manager){
+        int cantidad = 0;
+        
+        for(int i = 0; i< this.getEmpleadosOrdenados().size(); i++){
+            
+            if(manager.equals(this.getEmpleadosOrdenados().get(i).getManager())){
+                cantidad++;
+            }
+        
+        }
+        
+        return cantidad;
     }
     /*
     public Persona getManager(int cedula){

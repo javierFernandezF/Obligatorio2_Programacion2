@@ -15,15 +15,15 @@ import javax.swing.SwingUtilities;
  *
  * @author javierfernandez
  */
-public class VentanaAreaModificacion extends javax.swing.JFrame implements Observer {
+public class VentanaModificacionArea extends javax.swing.JFrame implements Observer {
     private Sistema sistema;
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaAreaModificacion.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaModificacionArea.class.getName());
 
     /**
      * Creates new form VentanaAreaModificacion
      */
-    public VentanaAreaModificacion(Sistema sistema) {
+    public VentanaModificacionArea(Sistema sistema) {
         this.sistema = sistema;
         this.sistema.addObserver(this);
         initComponents();

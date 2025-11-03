@@ -8,7 +8,7 @@ package Dominio.Personas;
  *
  * @author javierfernandez
  */
-public class Manager extends Persona {
+public class Manager extends Persona  {
     
     private int anosDeAntiguedad;
 

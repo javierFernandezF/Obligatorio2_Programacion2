@@ -118,6 +118,11 @@ public class PanelPrincipal extends javax.swing.JFrame {
         menuManagers.add(MenuManagerBaja);
 
         MenuManagerModificacion.setText("Modificación");
+        MenuManagerModificacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuManagerModificacionActionPerformed(evt);
+            }
+        });
         menuManagers.add(MenuManagerModificacion);
 
         menuPrincipal.add(menuManagers);
@@ -179,7 +184,7 @@ public class PanelPrincipal extends javax.swing.JFrame {
 
     private void MenuAreaModificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAreaModificacionActionPerformed
     
-        java.awt.EventQueue.invokeLater(() -> new VentanaAreaModificacion(sistema).setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new VentanaModificacionArea(sistema).setVisible(true));
 
 
     // TODO add your handling code here:
@@ -198,6 +203,13 @@ public class PanelPrincipal extends javax.swing.JFrame {
 
         // TODO add your handling code here:
     }//GEN-LAST:event_MenuManagerBajaActionPerformed
+
+    private void MenuManagerModificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuManagerModificacionActionPerformed
+    java.awt.EventQueue.invokeLater(() -> new VentanaModificacionManager(sistema).setVisible(true));
+
+        
+    // TODO add your handling code here:
+    }//GEN-LAST:event_MenuManagerModificacionActionPerformed
 
    
 

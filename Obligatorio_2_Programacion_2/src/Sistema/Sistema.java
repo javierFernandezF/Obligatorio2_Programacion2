@@ -25,6 +25,14 @@ public class Sistema extends Observable{
         this.listaAreas = new ListaAreas();
     }
 
+    public ListaPersonas getListaPersonas() {
+        return listaPersonas;
+    }
+
+    public ListaAreas getListaAreas() {
+        return listaAreas;
+    }
+    
     public void agregarArea(Area area){
         this.listaAreas.agregarArea(area);
         setChanged();
@@ -78,6 +86,10 @@ public class Sistema extends Observable{
         this.listaPersonas.eliminarManager(manager);
         setChanged();
         notifyObservers();
+    }
+    
+    public int cantidadDeEmpleadosDeUnManager(Manager manager){
+        return this.listaPersonas.cantidadDeEmpleadosDeUnManager(manager);
     }
    
 }
