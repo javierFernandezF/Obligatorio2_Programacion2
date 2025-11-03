@@ -39,6 +39,22 @@ public class ListaAreas {
         return areas;
     }
     
+    public Area getAreaPorNOmbre(String areaNombre){
+        
+        Area areaSeleccionada = new Area();
+        
+        for(int i = 0; i < this.areas.size(); i++){
+            
+            if(this.areas.get(i).getNombre().equals(areaNombre)){
+                areaSeleccionada = this.areas.get(i);
+            }
+        }
+
+        
+        
+        return areaSeleccionada;
+    }
+    
     public ArrayList<Area> getAreasOrdenadasPorNombre(){
     
     ArrayList<Area> areasOrdenadas = new ArrayList<>(this.areas); 
@@ -92,13 +108,13 @@ public class ListaAreas {
         return areasSinEmpleados;
     }
     
-    public void borrarArea(String area){
+    public void borrarArea(String areaNombre){
         
         int index = 0;
         boolean areaEncontrada = false;
         for(int i = 0; i < this.areas.size(); i++){
            
-            if(this.areas.get(i).getNombre().equals(area)){
+            if(this.areas.get(i).getNombre().equals(areaNombre)){
                 index = i;
                 areaEncontrada = true;
             }    

@@ -87,6 +87,11 @@ public class PanelPrincipal extends javax.swing.JFrame {
         menuAreas.add(MenuAreaBaja);
 
         MenuAreaModificacion.setText("Modificación");
+        MenuAreaModificacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuAreaModificacionActionPerformed(evt);
+            }
+        });
         menuAreas.add(MenuAreaModificacion);
 
         MenuAreaRealizarMovimiento.setText("Realizar movimiento");
@@ -97,9 +102,19 @@ public class PanelPrincipal extends javax.swing.JFrame {
         menuManagers.setText("Managers");
 
         MenuManagerAlta.setText("Alta");
+        MenuManagerAlta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuManagerAltaActionPerformed(evt);
+            }
+        });
         menuManagers.add(MenuManagerAlta);
 
         MenuManagerBaja.setText("Baja");
+        MenuManagerBaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuManagerBajaActionPerformed(evt);
+            }
+        });
         menuManagers.add(MenuManagerBaja);
 
         MenuManagerModificacion.setText("Modificación");
@@ -148,7 +163,7 @@ public class PanelPrincipal extends javax.swing.JFrame {
 
     private void MenuAreaAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAreaAltaActionPerformed
 
-    java.awt.EventQueue.invokeLater(() -> new VentanaAreaAlta(sistema).setVisible(true));
+    java.awt.EventQueue.invokeLater(() -> new VentanaAltaArea(sistema).setVisible(true));
      
     
     
@@ -157,10 +172,32 @@ public class PanelPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuAreaAltaActionPerformed
 
     private void MenuAreaBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAreaBajaActionPerformed
-           java.awt.EventQueue.invokeLater(() -> new VentanaAreaBaja(sistema).setVisible(true));
+           java.awt.EventQueue.invokeLater(() -> new VentanaBajaArea(sistema).setVisible(true));
 
         // TODO add your handling code here:
     }//GEN-LAST:event_MenuAreaBajaActionPerformed
+
+    private void MenuAreaModificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAreaModificacionActionPerformed
+    
+        java.awt.EventQueue.invokeLater(() -> new VentanaAreaModificacion(sistema).setVisible(true));
+
+
+    // TODO add your handling code here:
+    }//GEN-LAST:event_MenuAreaModificacionActionPerformed
+
+    private void MenuManagerAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuManagerAltaActionPerformed
+    
+        java.awt.EventQueue.invokeLater(() -> new VentanaAltaManager(sistema).setVisible(true));
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuManagerAltaActionPerformed
+
+    private void MenuManagerBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuManagerBajaActionPerformed
+        
+        java.awt.EventQueue.invokeLater(() -> new VentanaBajaManager(sistema).setVisible(true));
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuManagerBajaActionPerformed
 
    
 

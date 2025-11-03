@@ -14,6 +14,13 @@ public class Area {
     private String descripcion;
     private double presupuesto;
     private ArrayList<Empleado> listaEmpleados;
+    
+    public Area(){
+        this.nombre = "test";
+        this.descripcion = "test";
+        this.presupuesto = 123;
+        this.listaEmpleados = new ArrayList<Empleado>(); 
+    }
 
     public Area(String nombre, String descripcion, double presupuesto) {
         this.nombre = nombre;

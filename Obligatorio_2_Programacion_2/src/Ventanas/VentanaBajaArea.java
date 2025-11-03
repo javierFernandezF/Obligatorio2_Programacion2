@@ -14,14 +14,14 @@ import javax.swing.SwingUtilities;
  *
  * @author javierfernandez
  */
-public class VentanaAreaBaja extends javax.swing.JFrame implements Observer{
+public class VentanaBajaArea extends javax.swing.JFrame implements Observer{
     private Sistema sistema;
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaAreaBaja.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaBajaArea.class.getName());
 
     /**
      * Creates new form VentanaAreaBaja
      */
-    public VentanaAreaBaja(Sistema sistema) {
+    public VentanaBajaArea(Sistema sistema) {
         this.sistema = sistema;
         this.sistema.addObserver(this);
         initComponents();
@@ -124,8 +124,8 @@ public class VentanaAreaBaja extends javax.swing.JFrame implements Observer{
     private void actualizarAreasSinEmpleados(){
         ArrayList<String> nombresAreas = new ArrayList<>();
 
-        for(int i = 0; i < this.sistema.gerAreasSinEmpleados().size(); i++){
-          nombresAreas.add(this.sistema.gerAreasSinEmpleados().get(i).getNombre());
+        for(int i = 0; i < this.sistema.getAreasSinEmpleados().size(); i++){
+          nombresAreas.add(this.sistema.getAreasSinEmpleados().get(i).getNombre());
           
         }
        

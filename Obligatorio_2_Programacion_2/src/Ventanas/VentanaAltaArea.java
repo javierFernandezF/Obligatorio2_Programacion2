@@ -15,14 +15,14 @@ import javax.swing.SwingUtilities;
  *
  * @author javierfernandez
  */
-public class VentanaAreaAlta extends javax.swing.JFrame implements Observer{
+public class VentanaAltaArea extends javax.swing.JFrame implements Observer{
     private Sistema sistema;
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaAreaAlta.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaAltaArea.class.getName());
     
     /**
      * Creates new form VentanaAreaAlta
      */
-    public VentanaAreaAlta(Sistema sistema) {
+    public VentanaAltaArea(Sistema sistema) {
         this.sistema = sistema;
         this.sistema.addObserver(this);
         
@@ -44,7 +44,7 @@ public class VentanaAreaAlta extends javax.swing.JFrame implements Observer{
         jPanel1 = new javax.swing.JPanel();
         lbNombreArea = new javax.swing.JLabel();
         lbPresupuestoArea = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lbDescripcionArea = new javax.swing.JLabel();
         areaAltaInputNombre = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         areaAltaInputDescipcion = new javax.swing.JTextArea();
@@ -65,7 +65,7 @@ public class VentanaAreaAlta extends javax.swing.JFrame implements Observer{
 
         lbPresupuestoArea.setText("Presupuesto (USD)");
 
-        jLabel3.setText("Descripción:");
+        lbDescripcionArea.setText("Descripción:");
 
         areaAltaInputNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,7 +100,7 @@ public class VentanaAreaAlta extends javax.swing.JFrame implements Observer{
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lbPresupuestoArea)
                                     .addComponent(lbNombreArea)
-                                    .addComponent(jLabel3))
+                                    .addComponent(lbDescripcionArea))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(areaAltaInputNombre)
@@ -126,7 +126,7 @@ public class VentanaAreaAlta extends javax.swing.JFrame implements Observer{
                             .addComponent(lbPresupuestoArea)
                             .addComponent(areaAltaInputPresupuesto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel3)
+                        .addComponent(lbDescripcionArea)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -210,10 +210,10 @@ public class VentanaAreaAlta extends javax.swing.JFrame implements Observer{
     private javax.swing.JTextField areaAltaInputNombre;
     private javax.swing.JTextField areaAltaInputPresupuesto;
     private javax.swing.JButton btnAgregarArea;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lbDescripcionArea;
     private javax.swing.JLabel lbNombreArea;
     private javax.swing.JLabel lbPresupuestoArea;
     private javax.swing.JList<String> listaAreas;
