@@ -5,23 +5,33 @@
 package Ventanas;
 import Dominio.Areas.Area;
 import Sistema.Sistema;
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
+import javax.swing.SwingUtilities;
+
 
 /**
  *
  * @author javierfernandez
  */
-public class VentanaAreaAlta extends javax.swing.JFrame {
+public class VentanaAreaAlta extends javax.swing.JFrame implements Observer{
     private Sistema sistema;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaAreaAlta.class.getName());
-
+    
     /**
      * Creates new form VentanaAreaAlta
      */
     public VentanaAreaAlta(Sistema sistema) {
         this.sistema = sistema;
+        this.sistema.addObserver(this);
+        
         initComponents();
+        
+        
+        
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,11 +50,16 @@ public class VentanaAreaAlta extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         areaAltaInputDescipcion = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        listaAreas = new javax.swing.JList<>();
         btnAgregarArea = new javax.swing.JButton();
         areaAltaInputPresupuesto = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         lbAreaAlta.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
         lbAreaAlta.setText("Área Alta");
@@ -59,7 +74,7 @@ public class VentanaAreaAlta extends javax.swing.JFrame {
         areaAltaInputDescipcion.setRows(5);
         jScrollPane1.setViewportView(areaAltaInputDescipcion);
 
-        jScrollPane2.setViewportView(jList1);
+        jScrollPane2.setViewportView(listaAreas);
 
         btnAgregarArea.setText("Agregar área");
         btnAgregarArea.addActionListener(new java.awt.event.ActionListener() {
@@ -169,6 +184,23 @@ public class VentanaAreaAlta extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAgregarAreaActionPerformed
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        
+        this.actualizarAreas();
+
+    }//GEN-LAST:event_formWindowOpened
+    
+    private void actualizarAreas(){
+        ArrayList<String> nombresAreas = new ArrayList<>();
+
+        for(int i = 0; i < this.sistema.getAreasOrdenadasPorNombre().size(); i++){
+          nombresAreas.add(this.sistema.getAreasOrdenadasPorNombre().get(i).getNombre());
+          
+        }
+       
+        listaAreas.setListData(nombresAreas.toArray(new String[0]));
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -177,12 +209,28 @@ public class VentanaAreaAlta extends javax.swing.JFrame {
     private javax.swing.JTextField areaAltaInputPresupuesto;
     private javax.swing.JButton btnAgregarArea;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbAreaAlta;
     private javax.swing.JLabel lbNombreArea;
     private javax.swing.JLabel lbPresupuestoArea;
+    private javax.swing.JList<String> listaAreas;
     // End of variables declaration//GEN-END:variables
+/*
+    @Override
+    public void update(Observable o, Object arg) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+ */
+    
+    @Override
+    public void update(Observable o, Object arg) {
+        if (o == sistema) {
+            // Actualiza la interfaz gráfica en el hilo de eventos de Swing
+            SwingUtilities.invokeLater(() -> {
+                actualizarAreas();  // Método que actualiza el JList
+            });
+        }
+    }
 }

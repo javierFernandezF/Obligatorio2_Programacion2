@@ -39,6 +39,20 @@ public class ListaAreas {
         return areas;
     }
     
+    public ArrayList<Area> getAreasOrdenadasPorNombre(){
+    
+    ArrayList<Area> areasOrdenadas = new ArrayList<>(this.areas); 
+    
+    Collections.sort(areasOrdenadas, new Comparator<Area>() {
+        @Override
+        public int compare(Area e1, Area e2) {
+            return e1.getNombre().compareToIgnoreCase(e2.getNombre());
+        }
+    });
+
+    return areasOrdenadas;
+    }
+    
     public void agregarEmpleadoAArea(Area area, Empleado empleado){
         
         boolean areaEncontrada = false; 

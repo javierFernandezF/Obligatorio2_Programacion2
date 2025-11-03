@@ -102,9 +102,7 @@ public class VentanaInicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSistemaGuardadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSistemaGuardadoActionPerformed
-    java.awt.EventQueue.invokeLater(() -> new PanelPrincipal(this.sistema).setVisible(true));
-    this.setVisible(false);
-
+    
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSistemaGuardadoActionPerformed
 
