@@ -79,6 +79,11 @@ public class PanelPrincipal extends javax.swing.JFrame {
         menuAreas.add(MenuAreaAlta);
 
         MenuAreaBaja.setText("Baja");
+        MenuAreaBaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuAreaBajaActionPerformed(evt);
+            }
+        });
         menuAreas.add(MenuAreaBaja);
 
         MenuAreaModificacion.setText("Modificación");
@@ -150,6 +155,12 @@ public class PanelPrincipal extends javax.swing.JFrame {
 
         // TODO add your handling code here:
     }//GEN-LAST:event_MenuAreaAltaActionPerformed
+
+    private void MenuAreaBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAreaBajaActionPerformed
+           java.awt.EventQueue.invokeLater(() -> new VentanaAreaBaja(sistema).setVisible(true));
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuAreaBajaActionPerformed
 
    
 

@@ -51,6 +51,18 @@ public class Sistema extends Observable{
         return this.listaAreas.getAreasOrdenadasPorNombre();
     }
     
+    public ArrayList<Area> gerAreasSinEmpleados(){
+        return this.listaAreas.getAreasSinEmpleados();
+    }
+    
+    public void borrarArea(String area){
+        this.listaAreas.borrarArea(area);
+        setChanged();
+        notifyObservers();
+        
+    }
+    
+    //Conviene dejar las listas public para no repetir metodos??
     
     
 }

@@ -92,5 +92,22 @@ public class ListaAreas {
         return areasSinEmpleados;
     }
     
+    public void borrarArea(String area){
+        
+        int index = 0;
+        boolean areaEncontrada = false;
+        for(int i = 0; i < this.areas.size(); i++){
+           
+            if(this.areas.get(i).getNombre().equals(area)){
+                index = i;
+                areaEncontrada = true;
+            }    
+        }
+        
+        if(areaEncontrada){
+        this.areas.remove(index);
+        }
+    }
+    
     
 }
