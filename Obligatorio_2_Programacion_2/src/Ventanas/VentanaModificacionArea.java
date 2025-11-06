@@ -9,7 +9,6 @@ import Sistema.Sistema;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.SwingUtilities;
 
 /**
  *
@@ -203,14 +202,12 @@ public class VentanaModificacionArea extends javax.swing.JFrame implements Obser
     }
 
     
-    //PREGUNTAR EN CLASE!!!
     @Override
     public void update(Observable o, Object arg) {
         if (o == sistema) {
-            // Actualiza la interfaz gráfica en el hilo de eventos de Swing
-            SwingUtilities.invokeLater(() -> {
-                actualizarAreas();  // Método que actualiza el JList
-            });
+            
+            actualizarAreas();  
+            
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

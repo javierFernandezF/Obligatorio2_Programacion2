@@ -33,6 +33,7 @@ public class Sistema extends Observable{
         return listaAreas;
     }
     
+    
     public void agregarArea(Area area){
         this.listaAreas.agregarArea(area);
         setChanged();
@@ -72,7 +73,6 @@ public class Sistema extends Observable{
         return this.listaAreas.getAreaPorNOmbre(areaNombre);
     }
     
-    //Conviene dejar las listas public para no repetir metodos??
     
     public ArrayList<Manager> getManagersOrdenados(){
         return this.listaPersonas.getManagersOrdenados();
@@ -91,5 +91,11 @@ public class Sistema extends Observable{
     public int cantidadDeEmpleadosDeUnManager(Manager manager){
         return this.listaPersonas.cantidadDeEmpleadosDeUnManager(manager);
     }
+    
+     public void setCelularManager(Manager manager, String nuevoTelefono){
+         this.listaPersonas.setCelularManager(manager, nuevoTelefono);
+         setChanged();
+        notifyObservers();
+     }
    
 }

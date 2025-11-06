@@ -4,13 +4,13 @@
  */
 package Dominio.Personas;
 import java.util.*;
-import java.util.Observable;
+
 
 /**
  *
  * @author javierfernandez
  */
-public class ListaPersonas extends Observable{
+public class ListaPersonas{
     private ArrayList<Persona> listaPersonas;
 
     public ListaPersonas() {
@@ -36,7 +36,9 @@ public class ListaPersonas extends Observable{
           
         }
         
+       
     }
+    
     
     public void agregarManager(Manager manager){
         
@@ -54,6 +56,8 @@ public class ListaPersonas extends Observable{
         if(!managerYaExiste){
           listaPersonas.add(manager);  
         }
+        
+        
         
     }
     
@@ -128,6 +132,22 @@ public class ListaPersonas extends Observable{
         
     }
     
+    public Manager getManagerPorCedula(int cedula){
+        
+        Manager manager = new Manager("test", 123, "123", 123) ;
+        
+        for(int i = 0; i < this.getManagersOrdenados().size(); i++){
+            Manager managerSeleccionado = this.getManagersOrdenados().get(i);
+            
+            if(managerSeleccionado.getCedula() == cedula){
+                manager = managerSeleccionado;
+            }
+        }
+        
+        return manager;
+        
+    }
+    
     public ArrayList<Manager> getManagersSinEmpleadosACargo(){
             
             ArrayList<Manager> managers = this.getManagersOrdenados();
@@ -172,6 +192,7 @@ public class ListaPersonas extends Observable{
         
     public void eliminarManager(Manager manager){
         this.listaPersonas.remove(manager);
+      
     }
     
     public int cantidadDeEmpleadosDeUnManager(Manager manager){
@@ -187,14 +208,22 @@ public class ListaPersonas extends Observable{
         
         return cantidad;
     }
-    /*
-    public Persona getManager(int cedula){
-     
-        for(int i = 0; i < this.listaPersonas.size(); i++){
-            
+    
+    public void setCelularManager(Manager manager, String nuevoTelefono){
+        
+        
+        for(int i = 0; i < this.getManagersOrdenados().size(); i++){
+        Manager managerSelecionado = this.getManagersOrdenados().get(i);  
+        
+            if(managerSelecionado.equals(manager)){
+
+            managerSelecionado.setCelular(nuevoTelefono);
+
+            }
+
         }
-        
-        
+                
+                
+                    
     }
-    */
 }

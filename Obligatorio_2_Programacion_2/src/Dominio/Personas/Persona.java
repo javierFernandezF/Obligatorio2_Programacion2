@@ -4,13 +4,12 @@
  */
 package Dominio.Personas;
 
-import java.util.Observable;
 
 /**
  *
  * @author javierfernandez
  */
-public class Persona extends Observable{
+public class Persona {
     private String nombre;
     private int cedula;
     private String celular;
@@ -19,6 +18,14 @@ public class Persona extends Observable{
         this.nombre = nombre;
         this.cedula = cedula;
         this.celular = celular;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setCedula(int cedula) {
+        this.cedula = cedula;
     }
     
     
@@ -37,8 +44,6 @@ public class Persona extends Observable{
 
     public void setCelular(String celular) {
         this.celular = celular;
-        setChanged();
-        notifyObservers();
     }
     
     

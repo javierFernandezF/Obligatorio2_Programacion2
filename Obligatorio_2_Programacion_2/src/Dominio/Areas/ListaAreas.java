@@ -5,11 +5,13 @@
 package Dominio.Areas;
 import Dominio.Personas.Empleado;
 import java.util.*;
+
+
 /**
  *
  * @author javierfernandez
  */
-public class ListaAreas {
+public class ListaAreas{
     private ArrayList<Area> areas;
     
     public ListaAreas(){
@@ -17,6 +19,7 @@ public class ListaAreas {
     }
 
     public void agregarArea(Area area){
+        
         
         boolean areaYaExiste = false;
         
@@ -32,6 +35,8 @@ public class ListaAreas {
         if(!areaYaExiste){
           areas.add(area);  
         }
+        
+      
         
     }
     
@@ -65,8 +70,11 @@ public class ListaAreas {
             return e1.getNombre().compareToIgnoreCase(e2.getNombre());
         }
     });
+    
+   
 
     return areasOrdenadas;
+    
     }
     
     public void agregarEmpleadoAArea(Area area, Empleado empleado){
@@ -123,6 +131,8 @@ public class ListaAreas {
         if(areaEncontrada){
         this.areas.remove(index);
         }
+        
+       
     }
     
     

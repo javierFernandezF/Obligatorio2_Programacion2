@@ -42,7 +42,6 @@ public class VentanaPresentacion extends javax.swing.JFrame {
         lbBienvenido.setText("¡Bienvenido!");
 
         lbDatosAutor.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
-        lbDatosAutor.setText(" Autor: Entregable 2 - Javier Fernandez - 172271");
 
         lbLogoFantasia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Ventanas/img/logoERPChiquito.png"))); // NOI18N
 

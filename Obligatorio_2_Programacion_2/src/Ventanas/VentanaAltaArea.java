@@ -8,7 +8,6 @@ import Sistema.Sistema;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.SwingUtilities;
 
 
 /**
@@ -156,7 +155,7 @@ public class VentanaAltaArea extends javax.swing.JFrame implements Observer{
     private void btnAgregarAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarAreaActionPerformed
         
         try{
-            
+            System.out.println("entra boton");
              String nombre = areaAltaInputNombre.getText();
              String descripcion = areaAltaInputDescipcion.getText();
              double presupuesto = Double.parseDouble(areaAltaInputPresupuesto.getText());
@@ -194,6 +193,7 @@ public class VentanaAltaArea extends javax.swing.JFrame implements Observer{
     }//GEN-LAST:event_areaAltaInputNombreActionPerformed
     
     private void actualizarAreas(){
+        System.out.println("entra actualizar areas");
         ArrayList<String> nombresAreas = new ArrayList<>();
 
         for(int i = 0; i < this.sistema.getAreasOrdenadasPorNombre().size(); i++){
@@ -218,20 +218,12 @@ public class VentanaAltaArea extends javax.swing.JFrame implements Observer{
     private javax.swing.JLabel lbPresupuestoArea;
     private javax.swing.JList<String> listaAreas;
     // End of variables declaration//GEN-END:variables
-/*
-    @Override
-    public void update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
- */
-    //PREGUNTAR EN CLASE!!!
+
+    
     @Override
     public void update(Observable o, Object arg) {
         if (o == sistema) {
-            // Actualiza la interfaz gráfica en el hilo de eventos de Swing
-            SwingUtilities.invokeLater(() -> {
-                actualizarAreas();  // Método que actualiza el JList
-            });
+            actualizarAreas();   
         }
     }
 }

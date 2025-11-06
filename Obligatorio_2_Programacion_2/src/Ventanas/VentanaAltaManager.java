@@ -9,7 +9,6 @@ import Sistema.Sistema;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.SwingUtilities;
 
 /**
  *
@@ -202,6 +201,7 @@ public class VentanaAltaManager extends javax.swing.JFrame implements Observer {
     modeloTabla.setRowCount(0); 
     
     for (int i = 0; i < this.sistema.getManagersOrdenados().size(); i++) {
+        
         Manager manager = this.sistema.getManagersOrdenados().get(i);
         
         modeloTabla.addRow(new Object[]{
@@ -229,14 +229,11 @@ public class VentanaAltaManager extends javax.swing.JFrame implements Observer {
     private javax.swing.JTable tablaManager;
     // End of variables declaration//GEN-END:variables
     
-    //PREGUNTAR EN CLASE!!!
     @Override
     public void update(Observable o, Object arg) {
         if (o == sistema) {
-            // Actualiza la interfaz gráfica en el hilo de eventos de Swing
-            SwingUtilities.invokeLater(() -> {
-                actualizarManagers();  // Método que actualiza el JList
-            });
+            actualizarManagers(); 
         }
     }
+    
 }

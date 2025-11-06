@@ -11,6 +11,8 @@ package Dominio.Personas;
 public class Manager extends Persona  {
     
     private int anosDeAntiguedad;
+    
+    
 
     public Manager(String nombre, int cedula, String celular, int anosDeAntiguedad) {
         super(nombre, cedula, celular);
@@ -20,6 +22,8 @@ public class Manager extends Persona  {
     public int getAnosDeAntiguedad() {
         return anosDeAntiguedad;
     }
+    
+    
 
     @Override
     public int hashCode() {

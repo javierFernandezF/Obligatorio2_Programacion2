@@ -130,6 +130,11 @@ public class PanelPrincipal extends javax.swing.JFrame {
         menuEmpleados.setText("Empleados");
 
         MenuEmpleadoAlta.setText("Alta");
+        MenuEmpleadoAlta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuEmpleadoAltaActionPerformed(evt);
+            }
+        });
         menuEmpleados.add(MenuEmpleadoAlta);
 
         menuPrincipal.add(menuEmpleados);
@@ -210,6 +215,12 @@ public class PanelPrincipal extends javax.swing.JFrame {
         
     // TODO add your handling code here:
     }//GEN-LAST:event_MenuManagerModificacionActionPerformed
+
+    private void MenuEmpleadoAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuEmpleadoAltaActionPerformed
+    java.awt.EventQueue.invokeLater(() -> new VentanaAltaEmpleado(sistema).setVisible(true));
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuEmpleadoAltaActionPerformed
 
    
 

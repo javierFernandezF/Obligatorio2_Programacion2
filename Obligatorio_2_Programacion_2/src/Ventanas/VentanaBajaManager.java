@@ -165,14 +165,12 @@ public class VentanaBajaManager extends javax.swing.JFrame implements Observer {
             });
         }
     }
-    //PREGUNTAR EN CLASE!!!
+
     @Override
     public void update(Observable o, Object arg) {
         if (o == sistema) {
-            // Actualiza la interfaz gráfica en el hilo de eventos de Swing
-            SwingUtilities.invokeLater(() -> {
-                actualizarManagersSinEmpleados();  // Método que actualiza el JList
-            });
+            actualizarManagersSinEmpleados();  
+            
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

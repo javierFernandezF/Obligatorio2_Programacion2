@@ -8,7 +8,6 @@ import Sistema.Sistema;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.SwingUtilities;
 
 /**
  *
@@ -136,9 +135,9 @@ public class VentanaBajaArea extends javax.swing.JFrame implements Observer{
     @Override
     public void update(Observable o, Object arg) {
         if (o == sistema) {
-            SwingUtilities.invokeLater(() -> {
-                actualizarAreasSinEmpleados();  
-            });
+            
+            actualizarAreasSinEmpleados();  
+            
         }
     }
     

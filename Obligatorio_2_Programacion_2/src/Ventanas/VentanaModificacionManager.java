@@ -8,7 +8,6 @@ import Dominio.Personas.Manager;
 import Sistema.Sistema;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.SwingUtilities;
 
 /**
  *
@@ -65,7 +64,7 @@ public class VentanaModificacionManager extends javax.swing.JFrame implements Ob
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, true
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -173,17 +172,7 @@ public class VentanaModificacionManager extends javax.swing.JFrame implements Ob
 
             Manager managerSeleccionado = new Manager(nombre,cedula,celular,antiguedad);
 
-            for(int i = 0; i < this.sistema.getListaPersonas().getManagersOrdenados().size(); i++){
-
-                Manager manager = this.sistema.getListaPersonas().getManagersOrdenados().get(i);
-
-                if(managerSeleccionado.equals(manager)){
-
-                    manager.setCelular(nuevoTelefono);
-
-                }
-
-            }
+            this.sistema.setCelularManager(managerSeleccionado, nuevoTelefono);
 
             inputModificarCelularManager.setText("");
 
@@ -198,7 +187,12 @@ public class VentanaModificacionManager extends javax.swing.JFrame implements Ob
     
     public void actualizarManagers() {
     javax.swing.table.DefaultTableModel modeloTabla = (javax.swing.table.DefaultTableModel) tablaManager.getModel();
-    modeloTabla.setRowCount(0); 
+    
+       
+    //Ver como borrar todas las filas o editar solo la parte del celular.
+    modeloTabla.setRowCount(0);
+    
+    System.out.println("LLAMANDO AL OBSERVER");
     
     for (int i = 0; i < this.sistema.getManagersOrdenados().size(); i++) {
         Manager manager = this.sistema.getManagersOrdenados().get(i);
@@ -213,16 +207,13 @@ public class VentanaModificacionManager extends javax.swing.JFrame implements Ob
                 
             });
         }
+        System.out.println("luego del for");
     }
     
-    //PREGUNTAR EN CLASE!!!
     @Override
     public void update(Observable o, Object arg) {
         if (o == sistema) {
-            // Actualiza la interfaz gráfica en el hilo de eventos de Swing
-            SwingUtilities.invokeLater(() -> {
-                actualizarManagers();  // Método que actualiza el JList
-            });
+           actualizarManagers();  
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
