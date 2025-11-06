@@ -7,10 +7,16 @@ package Ventanas;
 import Dominio.Areas.Area;
 import Dominio.Personas.Empleado;
 import Dominio.Personas.Manager;
+import FuncionalidadTexto.ArchivoGrabacion;
 import Sistema.Sistema;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Observer;
 import java.util.Observable;
+import javax.swing.JTextArea;
 
 
 /**
@@ -57,6 +63,9 @@ public class VentanaAltaEmpleado extends javax.swing.JFrame implements Observer 
         jScrollPane5 = new javax.swing.JScrollPane();
         listaAreas = new javax.swing.JList<>();
         jLabel5 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtEmpleadoCv = new javax.swing.JTextArea();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -112,15 +121,18 @@ public class VentanaAltaEmpleado extends javax.swing.JFrame implements Observer 
 
         jLabel5.setText("Área");
 
+        txtEmpleadoCv.setColumns(20);
+        txtEmpleadoCv.setRows(5);
+        jScrollPane2.setViewportView(txtEmpleadoCv);
+
+        jLabel6.setText("Escriba a continuación su CV:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 755, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -143,7 +155,7 @@ public class VentanaAltaEmpleado extends javax.swing.JFrame implements Observer 
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(inputCedula, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
-                                    .addComponent(inputNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
+                                    .addComponent(inputNombre)
                                     .addComponent(inputCelular)
                                     .addComponent(inputSalarioMensual))))
                         .addGap(66, 66, 66)
@@ -152,11 +164,16 @@ public class VentanaAltaEmpleado extends javax.swing.JFrame implements Observer 
                             .addComponent(jLabel7))
                         .addGap(70, 70, 70)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
-                .addGap(496, 496, 496))
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1011, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,7 +193,7 @@ public class VentanaAltaEmpleado extends javax.swing.JFrame implements Observer 
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(inputCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel2))))
-                        .addGap(35, 35, 35)
+                        .addGap(65, 65, 65)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
                             .addComponent(inputCelular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -188,14 +205,17 @@ public class VentanaAltaEmpleado extends javax.swing.JFrame implements Observer 
                         .addComponent(btnIngresarEmpleado)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(12, 12, 12)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(jLabel5))
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                         .addGap(110, 110, 110))))
         );
 
@@ -203,7 +223,9 @@ public class VentanaAltaEmpleado extends javax.swing.JFrame implements Observer 
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 786, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,12 +269,11 @@ public class VentanaAltaEmpleado extends javax.swing.JFrame implements Observer 
         
         
         
-       
         
-       Empleado empleado = new Empleado(nombre,cedula,celular,salarioMensual,area,manager);
+        Empleado empleado = new Empleado(nombre,cedula,celular,salarioMensual,area,manager);
+        this.sistema.agregarEmpleado(empleado, area);
        
-       this.sistema.agregarEmpleado(empleado, area);
-        
+        guardarCv(String.valueOf(cedula), txtEmpleadoCv);
         
         }catch (NumberFormatException e){
             javax.swing.JOptionPane.showMessageDialog(this, "La cédula debe escribirse sin putnos ni guion y la antiguedad en años enteros.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -262,7 +283,40 @@ public class VentanaAltaEmpleado extends javax.swing.JFrame implements Observer 
 
         // TODO add your handling code here:
     }//GEN-LAST:event_btnIngresarEmpleadoActionPerformed
+    
+    public void guardarCv(String cedula, JTextArea texto){
+        
+        Path carpetaCvs = Paths.get("cvs");
 
+        try{
+            
+        Files.createDirectories(carpetaCvs); 
+        
+        String nombreArchivo = "CV" + cedula;
+        Path archivoCv = carpetaCvs.resolve(nombreArchivo);
+
+        
+        
+        ArchivoGrabacion arch = new ArchivoGrabacion(archivoCv.toString(), false);
+        
+        String[] textoCvPorLinea = texto.getText().split("\\R");
+        for (String linea : textoCvPorLinea) {
+        arch.grabarLinea(linea);
+        }
+
+        arch.cerrar();
+        
+        }catch (IOException e) {
+            System.out.println("Error al hacer el archivo.");
+            javax.swing.JOptionPane.showMessageDialog(this, "No se pudo guardar el CV.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }   
+        
+        
+
+    }
+    
+    
     public void actualizarEmpleados() {
     javax.swing.table.DefaultTableModel modeloTabla = (javax.swing.table.DefaultTableModel) tablaEmpleados.getModel();
     modeloTabla.setRowCount(0); 
@@ -331,13 +385,16 @@ public class VentanaAltaEmpleado extends javax.swing.JFrame implements Observer 
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JList<String> listaAreas;
     private javax.swing.JTable tablaEmpleados;
     private javax.swing.JTable tablaManagers;
+    private javax.swing.JTextArea txtEmpleadoCv;
     // End of variables declaration//GEN-END:variables
 }
