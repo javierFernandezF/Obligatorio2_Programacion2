@@ -59,10 +59,7 @@ public class Persona {
         if (this == obj) {
             return true;
         }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
+        if (!(obj instanceof Persona)) {
             return false;
         }
         final Persona other = (Persona) obj;
