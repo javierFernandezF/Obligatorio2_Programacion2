@@ -99,7 +99,7 @@ public class Sistema extends Observable{
         // Validar que la nueva área tenga presupuesto suficiente
         if (validarPresupuestoArea(empleado, nuevaArea, mesesATrabajarEnNuevaArea)) {
             
-            Area areaAnterior = empleado.getArea();
+            Area areaAnterior = getAreaDelEmpleado(empleado);
             int salarioMensual = empleado.getSalarioMensual();
             
             // 1. Liberar presupuesto del área anterior (por meses no trabajados)
@@ -118,9 +118,22 @@ public class Sistema extends Observable{
             // 4. Agregar empleado a la nueva área
             areaNueva.agregarEmpleado(empleado);
             
-            // 5. Actualizar referencia del área en el empleado
-            this.listaPersonas.getEmpleadoPorCedula(empleado.getCedula()).setArea(areaNueva);
+            // Ya no necesitamos actualizar referencia en empleado - solo existe en Area
         }
+    }
+    
+    /**
+     * Encuentra el área donde trabaja un empleado específico
+     * @param empleado El empleado a buscar
+     * @return El área donde trabaja el empleado, o null si no se encuentra
+     */
+    public Area getAreaDelEmpleado(Empleado empleado) {
+        for (Area area : this.listaAreas.getAreasOrdenadasPorNombre()) {
+            if (area.getListaEmpleados().contains(empleado)) {
+                return area;
+            }
+        }
+        return null;
     }
     
     public ArrayList<Area> getAreasOrdenadasPorNombre(){

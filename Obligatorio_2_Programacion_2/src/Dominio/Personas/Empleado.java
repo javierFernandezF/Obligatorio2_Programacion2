@@ -4,7 +4,6 @@
  */
 package Dominio.Personas;
 
-import Dominio.Areas.Area;
 
 /**
  *
@@ -13,21 +12,16 @@ import Dominio.Areas.Area;
 public class Empleado extends Persona {
     private int salarioMensual;
     private Manager manager;
-    private Area area;
 
-    public Empleado(String nombre, int cedula, String celular,int salarioMensual, Area area, Manager manager) {
+    public Empleado(String nombre, int cedula, String celular,int salarioMensual, Manager manager) {
         super(nombre, cedula, celular);
         this.salarioMensual = salarioMensual;
         this.manager = manager;
-        this.area = area;
         
         
         
     }
 
-    public Area getArea() {
-        return area;
-    }
 
     public int getSalarioMensual() {
         return salarioMensual;
@@ -45,9 +39,6 @@ public class Empleado extends Persona {
         this.manager = manager;
     }
     
-    public void setArea(Area area) {
-        this.area = area;
-    }
     
     
     

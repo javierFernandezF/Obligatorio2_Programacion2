@@ -270,7 +270,7 @@ public class VentanaAltaEmpleado extends javax.swing.JFrame implements Observer 
         
         
         
-        Empleado empleado = new Empleado(nombre,cedula,celular,salarioMensual,area,manager);
+        Empleado empleado = new Empleado(nombre,cedula,celular,salarioMensual,manager);
         
         if (!this.sistema.validarPresupuestoArea(empleado, area, 12)) {
             javax.swing.JOptionPane.showMessageDialog(this, "El área no cuenta con presupuesto disponible para cubrir el salario.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -342,7 +342,7 @@ public class VentanaAltaEmpleado extends javax.swing.JFrame implements Observer 
             empleado.getCelular(),
             empleado.getSalarioMensual(),
             empleado.getManager().getNombre(),
-            empleado.getArea().getNombre(),
+            this.sistema.getAreaDelEmpleado(empleado) != null ? this.sistema.getAreaDelEmpleado(empleado).getNombre() : "Sin área",
             });
         
         }

@@ -152,7 +152,7 @@ public class ListaPersonas{
         
         
         
-        Empleado empleado = new Empleado("test", 123, "123", 0,null,null ) ;
+        Empleado empleado = new Empleado("test", 123, "123", 0, null) ;
         
         for(int i = 0; i < this.getEmpleadosOrdenados().size(); i++){
             Empleado empleadoSeleccionado = this.getEmpleadosOrdenados().get(i);
