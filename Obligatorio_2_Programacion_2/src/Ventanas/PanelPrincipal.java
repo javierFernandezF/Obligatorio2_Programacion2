@@ -95,6 +95,11 @@ public class PanelPrincipal extends javax.swing.JFrame {
         menuAreas.add(MenuAreaModificacion);
 
         MenuAreaRealizarMovimiento.setText("Realizar movimiento");
+        MenuAreaRealizarMovimiento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuAreaRealizarMovimientoActionPerformed(evt);
+            }
+        });
         menuAreas.add(MenuAreaRealizarMovimiento);
 
         menuPrincipal.add(menuAreas);
@@ -217,10 +222,16 @@ public class PanelPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuManagerModificacionActionPerformed
 
     private void MenuEmpleadoAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuEmpleadoAltaActionPerformed
-    java.awt.EventQueue.invokeLater(() -> new VentanaAltaEmpleado(sistema).setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new VentanaAltaEmpleado(sistema).setVisible(true));
 
         // TODO add your handling code here:
     }//GEN-LAST:event_MenuEmpleadoAltaActionPerformed
+
+    private void MenuAreaRealizarMovimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAreaRealizarMovimientoActionPerformed
+        java.awt.EventQueue.invokeLater(() -> new VentanaMovimientoArea(sistema).setVisible(true));
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuAreaRealizarMovimientoActionPerformed
 
    
 

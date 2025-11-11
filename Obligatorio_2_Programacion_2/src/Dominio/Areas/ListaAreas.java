@@ -44,7 +44,7 @@ public class ListaAreas{
         return areas;
     }
     
-    public Area getAreaPorNOmbre(String areaNombre){
+    public Area getAreaPorNombre(String areaNombre){
         
         Area areaSeleccionada = new Area();
         

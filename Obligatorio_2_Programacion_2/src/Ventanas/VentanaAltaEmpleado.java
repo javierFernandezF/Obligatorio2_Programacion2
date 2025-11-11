@@ -271,6 +271,15 @@ public class VentanaAltaEmpleado extends javax.swing.JFrame implements Observer 
         
         
         Empleado empleado = new Empleado(nombre,cedula,celular,salarioMensual,area,manager);
+        
+        if (!this.sistema.validarPresupuestoArea(empleado, area, 12)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El área no cuenta con presupuesto disponible para cubrir el salario.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+
+        }
+
+        
+        
         this.sistema.agregarEmpleado(empleado, area);
        
         guardarCv(String.valueOf(cedula), txtEmpleadoCv);

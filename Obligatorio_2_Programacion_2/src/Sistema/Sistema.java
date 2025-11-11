@@ -46,16 +46,86 @@ public class Sistema extends Observable{
         notifyObservers();
     }
     
-    public void agregarEmpleado(Empleado empleado, Area area){
-        this.listaPersonas.agregarEmpleado(empleado);
-        this.listaAreas.agregarEmpleadoAArea(area, empleado);
-        setChanged();
-        notifyObservers();
+    public boolean validarPresupuestoArea(Empleado empleado, Area area, int mesesDeTrabajo){
         
+        boolean daElPresupuesto = false;
+        int salarioMensual = empleado.getSalarioMensual();
+        
+        
+        daElPresupuesto = salarioMensual*mesesDeTrabajo <= area.getPresupuesto();
+        
+        
+        return daElPresupuesto;
+    }
+    
+    public void restarPresupuestoArea(Area area, int cantidadARestar){
+        double nuevoPresupuesto = area.getPresupuesto() - cantidadARestar;
+        
+        area.setPresupuesto(nuevoPresupuesto);           
+                
+    }
+    
+    public void sumarPresupuestoArea(Area area, int cantidadASumar){
+        double nuevoPresupuesto = area.getPresupuesto() - cantidadASumar;
+        
+        area.setPresupuesto(nuevoPresupuesto); 
+    }
+    
+    public void agregarEmpleado(Empleado empleado, Area area){
+        
+        int mesesDeTrabajo = 12;
+        
+        if(validarPresupuestoArea(empleado,area,mesesDeTrabajo)){
+
+            this.listaAreas.agregarEmpleadoAArea(area, empleado);
+            this.listaPersonas.agregarEmpleado(empleado);
+            
+            
+            
+            restarPresupuestoArea(area, empleado.getSalarioMensual()*mesesDeTrabajo);
+            
+            setChanged();
+            notifyObservers();
+        
+        }
+        
+    }
+    
+    public void cambiarEmpleadoDeArea(Empleado empleado, Area nuevaArea, int mesDeEntrada) {
+        // Calcular meses en cada área
+        int mesesTrabajadosEnAreaAnterior = mesDeEntrada - 1;
+        int mesesATrabajarEnNuevaArea = 12 - mesesTrabajadosEnAreaAnterior;
+        
+        // Validar que la nueva área tenga presupuesto suficiente
+        if (validarPresupuestoArea(empleado, nuevaArea, mesesATrabajarEnNuevaArea)) {
+            
+            Area areaAnterior = empleado.getArea();
+            int salarioMensual = empleado.getSalarioMensual();
+            
+            // 1. Liberar presupuesto del área anterior (por meses no trabajados)
+            Area areaAnt = this.listaAreas.getAreaPorNombre(areaAnterior.getNombre());
+            int presupuestoLiberado = salarioMensual * mesesATrabajarEnNuevaArea;
+            areaAnt.setPresupuesto((int) (areaAnt.getPresupuesto() + presupuestoLiberado));
+            
+            // 2. Remover empleado del área anterior
+            areaAnt.borrarUnEmpleado(empleado);
+            
+            // 3. Asignar presupuesto a la nueva área
+            Area areaNueva = this.listaAreas.getAreaPorNombre(nuevaArea.getNombre());
+            int presupuestoRequerido = salarioMensual * mesesATrabajarEnNuevaArea;
+            areaNueva.setPresupuesto((int) (areaNueva.getPresupuesto() - presupuestoRequerido));
+            
+            // 4. Agregar empleado a la nueva área
+            areaNueva.agregarEmpleado(empleado);
+            
+            // 5. Actualizar referencia del área en el empleado
+            this.listaPersonas.getEmpleadoPorCedula(empleado.getCedula()).setArea(areaNueva);
+        }
     }
     
     public ArrayList<Area> getAreasOrdenadasPorNombre(){
         return this.listaAreas.getAreasOrdenadasPorNombre();
+                
     }
     
     public ArrayList<Area> getAreasSinEmpleados(){
@@ -70,7 +140,7 @@ public class Sistema extends Observable{
     }
     
     public Area getAreaPorNOmbre(String areaNombre){
-        return this.listaAreas.getAreaPorNOmbre(areaNombre);
+        return this.listaAreas.getAreaPorNombre(areaNombre);
     }
     
     

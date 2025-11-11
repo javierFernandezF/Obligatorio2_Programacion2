@@ -148,6 +148,24 @@ public class ListaPersonas{
         
     }
     
+    public Empleado getEmpleadoPorCedula(int cedula){
+        
+        
+        
+        Empleado empleado = new Empleado("test", 123, "123", 0,null,null ) ;
+        
+        for(int i = 0; i < this.getEmpleadosOrdenados().size(); i++){
+            Empleado empleadoSeleccionado = this.getEmpleadosOrdenados().get(i);
+            
+            if(empleadoSeleccionado.getCedula() == cedula){
+                empleado = empleadoSeleccionado;
+            }
+        }
+        
+        return empleado;
+        
+    }
+    
     public ArrayList<Manager> getManagersSinEmpleadosACargo(){
             
             ArrayList<Manager> managers = this.getManagersOrdenados();

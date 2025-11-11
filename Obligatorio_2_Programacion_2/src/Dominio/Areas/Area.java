@@ -49,7 +49,7 @@ public class Area {
         this.descripcion = descripcion;
     }
 
-    public void setPresupuesto(int presupuesto) {
+    public void setPresupuesto(double presupuesto) {
         this.presupuesto = presupuesto;
     }
     
@@ -57,6 +57,12 @@ public class Area {
         this.listaEmpleados.add(empleado);
     }
     
+    public void borrarUnEmpleado(Empleado empleado){
+        int index = this.listaEmpleados.indexOf(empleado);
+        
+        this.listaEmpleados.remove(index);
+        
+    }
 
     @Override
     public int hashCode() {
