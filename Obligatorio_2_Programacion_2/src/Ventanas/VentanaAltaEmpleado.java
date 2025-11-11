@@ -265,7 +265,7 @@ public class VentanaAltaEmpleado extends javax.swing.JFrame implements Observer 
                 
                 
         String areaNombre = listaAreas.getSelectedValue();
-        Area area = this.sistema.getListaAreas().getAreaPorNOmbre(areaNombre);
+        Area area = this.sistema.getListaAreas().getAreaPorNombre(areaNombre);
         
         
         
