@@ -91,49 +91,54 @@ public class Sistema extends Observable{
         
     }
     
-    public void cambiarEmpleadoDeArea(Empleado empleado, Area nuevaArea, int mesDeEntrada) {
-        // Calcular meses en cada área
+    public void cambiarEmpleadoDeArea(Empleado empleado, Area nuevaArea, int mesDeEntrada){
+        
         int mesesTrabajadosEnAreaAnterior = mesDeEntrada - 1;
         int mesesATrabajarEnNuevaArea = 12 - mesesTrabajadosEnAreaAnterior;
         
-        // Validar que la nueva área tenga presupuesto suficiente
-        if (validarPresupuestoArea(empleado, nuevaArea, mesesATrabajarEnNuevaArea)) {
+        
+        if(validarPresupuestoArea(empleado,nuevaArea,mesesATrabajarEnNuevaArea)){
             
             Area areaAnterior = getAreaDelEmpleado(empleado);
             int salarioMensual = empleado.getSalarioMensual();
             
-            // 1. Liberar presupuesto del área anterior (por meses no trabajados)
             Area areaAnt = this.listaAreas.getAreaPorNombre(areaAnterior.getNombre());
             int presupuestoLiberado = salarioMensual * mesesATrabajarEnNuevaArea;
             areaAnt.setPresupuesto((int) (areaAnt.getPresupuesto() + presupuestoLiberado));
             
-            // 2. Remover empleado del área anterior
             areaAnt.borrarUnEmpleado(empleado);
             
-            // 3. Asignar presupuesto a la nueva área
             Area areaNueva = this.listaAreas.getAreaPorNombre(nuevaArea.getNombre());
             int presupuestoRequerido = salarioMensual * mesesATrabajarEnNuevaArea;
             areaNueva.setPresupuesto((int) (areaNueva.getPresupuesto() - presupuestoRequerido));
             
-            // 4. Agregar empleado a la nueva área
             areaNueva.agregarEmpleado(empleado);
             
-            // Ya no necesitamos actualizar referencia en empleado - solo existe en Area
+            
+            
         }
+        
     }
     
-    /**
-     * Encuentra el área donde trabaja un empleado específico
-     * @param empleado El empleado a buscar
-     * @return El área donde trabaja el empleado, o null si no se encuentra
-     */
-    public Area getAreaDelEmpleado(Empleado empleado) {
-        for (Area area : this.listaAreas.getAreasOrdenadasPorNombre()) {
-            if (area.getListaEmpleados().contains(empleado)) {
-                return area;
+    public Area getAreaDelEmpleado(Empleado empleado){
+        
+        Area areaDelEmpleado = null;
+        
+        for(int i = 0; i < this.listaAreas.getAreasOrdenadasPorNombre().size(); i++){
+            
+            Area areaActual = this.listaAreas.getAreasOrdenadasPorNombre().get(i);
+            
+            for(int j = 0; j < areaActual.getListaEmpleados().size(); j++){
+                
+                Empleado empleadoActual = areaActual.getListaEmpleados().get(j);
+                
+                if(empleadoActual.equals(empleado)){
+                    areaDelEmpleado = areaActual;
+                }
             }
         }
-        return null;
+        
+        return areaDelEmpleado;
     }
     
     public ArrayList<Area> getAreasOrdenadasPorNombre(){
