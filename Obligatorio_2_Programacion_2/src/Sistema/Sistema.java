@@ -46,17 +46,7 @@ public class Sistema extends Observable{
         notifyObservers();
     }
     
-    public boolean validarPresupuestoArea(Empleado empleado, Area area, int mesesDeTrabajo){
-        
-        boolean daElPresupuesto = false;
-        int salarioMensual = empleado.getSalarioMensual();
-        
-        
-        daElPresupuesto = salarioMensual*mesesDeTrabajo <= area.getPresupuesto();
-        
-        
-        return daElPresupuesto;
-    }
+    
     
     public void restarPresupuestoArea(Area area, int cantidadARestar){
         double nuevoPresupuesto = area.getPresupuesto() - cantidadARestar;
@@ -69,6 +59,18 @@ public class Sistema extends Observable{
         double nuevoPresupuesto = area.getPresupuesto() - cantidadASumar;
         
         area.setPresupuesto(nuevoPresupuesto); 
+    }
+    
+    public boolean validarPresupuestoArea(Empleado empleado, Area area, int mesesDeTrabajo){
+        
+        boolean daElPresupuesto = false;
+        int salarioMensual = empleado.getSalarioMensual();
+        
+        
+        daElPresupuesto = salarioMensual*mesesDeTrabajo <= area.getPresupuesto();
+        
+        
+        return daElPresupuesto;
     }
     
     public void agregarEmpleado(Empleado empleado, Area area){
@@ -114,9 +116,11 @@ public class Sistema extends Observable{
             
             areaNueva.agregarEmpleado(empleado);
             
-            
+            setChanged();
+            notifyObservers();
             
         }
+        
         
     }
     
