@@ -88,6 +88,11 @@ public class Sistema extends Observable{
             
             Area areaAnterior = getAreaDelEmpleado(empleado);
             
+            // Si se selecciona enero (mes 1), limpiar todos los cambios anteriores del empleado
+            if(mesDeEntrada == 1){
+                listaCambioArea.limpiarCambiosDeEmpleado(empleado);
+            }
+            
             listaCambioArea.agregarCambio(empleado, areaAnterior.getNombre(), nuevaArea.getNombre(), mesDeEntrada, 12);
             
             areaAnterior.borrarUnEmpleado(empleado);

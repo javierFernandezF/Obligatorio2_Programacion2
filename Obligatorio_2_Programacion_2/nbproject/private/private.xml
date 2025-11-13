@@ -3,9 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/javierfernandez/NetBeansProjects/Obligatorio2_Programacion2/Obligatorio_2_Programacion_2/src/Ventanas/VentanaMovimientoArea.java</file>
             <file>file:/Users/javierfernandez/NetBeansProjects/Obligatorio2_Programacion2/Obligatorio_2_Programacion_2/src/Sistema/Sistema.java</file>
-            <file>file:/Users/javierfernandez/NetBeansProjects/Obligatorio2_Programacion2/Obligatorio_2_Programacion_2/src/Dominio/Areas/ListaAreas.java</file>
+            <file>file:/Users/javierfernandez/NetBeansProjects/Obligatorio2_Programacion2/Obligatorio_2_Programacion_2/src/Dominio/Areas/Area.java</file>
+            <file>file:/Users/javierfernandez/NetBeansProjects/Obligatorio2_Programacion2/Obligatorio_2_Programacion_2/src/Historial/CambioArea.java</file>
+            <file>file:/Users/javierfernandez/NetBeansProjects/Obligatorio2_Programacion2/Obligatorio_2_Programacion_2/src/Historial/ListaCambioArea.java</file>
         </group>
     </open-files>
 </project-private>

@@ -10,7 +10,7 @@ import java.util.*;
  * @author javierfernandez
  */
 public class Area {
-    private String nombre;
+    final private String nombre;
     private String descripcion;
     final private double presupuesto;
     private ArrayList<Empleado> listaEmpleados;

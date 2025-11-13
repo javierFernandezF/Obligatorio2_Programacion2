@@ -345,7 +345,7 @@ public class VentanaMovimientoArea extends javax.swing.JFrame implements Observe
             modeloTabla.addRow(new Object[]{
                 area.getNombre(),
                 area.getPresupuesto(),
-                this.sistema.getDistribucionPresupuesto().getPresupuestoDisponible(area),
+                this.sistema.getPresupuestoDisponible(area),
 
                 });
 

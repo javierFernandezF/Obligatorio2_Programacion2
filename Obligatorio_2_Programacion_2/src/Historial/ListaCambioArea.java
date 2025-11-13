@@ -31,25 +31,60 @@ public class ListaCambioArea {
     }
     
     public double calcularPresupuestoUsadoPorArea(Area area) {
-        double presupuestoUsado;
-        CambioArea cambio;
-        String nombreArea;
+        String nombreArea = area.getNombre();
+        double presupuestoUsado = 0;
         
-        presupuestoUsado = 0;
-        nombreArea = area.getNombre();
-        
+        // Obtener todos los empleados únicos que han tenido cambios
+        ArrayList<Empleado> empleadosUnicos = new ArrayList<>();
         for (int i = 0; i < listaCambios.size(); i++) {
-            cambio = listaCambios.get(i);
-            
-            if (cambio.getNombreAreaNueva().equals(nombreArea)) {
-                presupuestoUsado = presupuestoUsado + cambio.getCostoTotal();
-            }
-            if (cambio.getNombreAreaAnterior() != null && cambio.getNombreAreaAnterior().equals(nombreArea)) {
-                presupuestoUsado = presupuestoUsado - cambio.getCostoTotal();
+            CambioArea cambio = listaCambios.get(i);
+            if (!empleadosUnicos.contains(cambio.getEmpleado())) {
+                empleadosUnicos.add(cambio.getEmpleado());
             }
         }
         
+        // Para cada empleado, calcular cuántos meses trabajó en esta área
+        for (int i = 0; i < empleadosUnicos.size(); i++) {
+            Empleado empleado = empleadosUnicos.get(i);
+            int mesesEnArea = calcularMesesEmpleadoEnArea(empleado, nombreArea);
+            presupuestoUsado += empleado.getSalarioMensual() * mesesEnArea;
+        }
+        
         return presupuestoUsado;
+    }
+    
+    /**
+     * Calcula cuántos meses trabajó un empleado específico en un área específica,
+     * considerando todos los cambios y manejando correctamente las superposiciones.
+     */
+    private int calcularMesesEmpleadoEnArea(Empleado empleado, String nombreArea) {
+        // Array para almacenar en qué área estuvo cada mes (null si no hay asignación)
+        String[] areasPorMes = new String[13]; // índices 1-12 para los meses
+        
+        // Obtener todos los cambios de este empleado ordenados por mes de inicio
+        ArrayList<CambioArea> cambiosEmpleado = getCambiosPorEmpleado(empleado);
+        cambiosEmpleado.sort((c1, c2) -> Integer.compare(c1.getMesInicio(), c2.getMesInicio()));
+        
+        // Procesar cada cambio en orden cronológico
+        // Los cambios posteriores sobrescriben los anteriores en caso de superposición
+        for (int i = 0; i < cambiosEmpleado.size(); i++) {
+            
+            CambioArea cambio = cambiosEmpleado.get(i);
+            
+            for (int mes = cambio.getMesInicio(); mes <= cambio.getMesFin(); mes++) {
+                areasPorMes[mes] = cambio.getNombreAreaNueva();
+            }
+        }
+        
+        // Contar cuántos meses estuvo en el área especificada
+        int totalMeses = 0;
+        for (int mes = 1; mes <= 12; mes++) {
+            if (nombreArea.equals(areasPorMes[mes])) {
+                totalMeses++;
+            }
+        }
+        
+        return totalMeses;
     }
     
     public ArrayList<CambioArea> getCambiosPorArea(Area area) {
@@ -78,6 +113,7 @@ public class ListaCambioArea {
         cambiosEmpleado = new ArrayList<>();
         
         for (int i = 0; i < listaCambios.size(); i++) {
+            
             cambio = listaCambios.get(i);
             
             if (cambio.getEmpleado().equals(empleado)) {
@@ -86,6 +122,21 @@ public class ListaCambioArea {
         }
         
         return cambiosEmpleado;
+    }
+    
+    /**
+     * Elimina todos los cambios de área de un empleado específico.
+     * Se usa cuando se hace un cambio desde enero para limpiar el historial anterior.
+     */
+    public void limpiarCambiosDeEmpleado(Empleado empleado) {
+        for (int i = listaCambios.size() - 1; i >= 0; i--) {
+            
+            CambioArea cambio = listaCambios.get(i);
+            
+            if (cambio.getEmpleado().equals(empleado)) {
+                listaCambios.remove(i);
+            }
+        }
     }
     
     public ArrayList<CambioArea> getListaCambios() {
@@ -103,7 +154,7 @@ public class ListaCambioArea {
     }
     
     public boolean validarPresupuesto(Area area, double costoAdicional) {
-        return getPresupuestoDisponible(area) >= costoAdicional;
+        return getPresupuestoDisponible(area) > costoAdicional;
     }
     
     public double getPresupuestoOriginal(Area area) {
