@@ -55,17 +55,17 @@ public class VentanaMovimientoArea extends javax.swing.JFrame implements Observe
 
         tablaArea.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Nombre", "Presupuesto anual"
+                "Nombre", "Presupuesto anual", "Presupuesto disponible"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -78,9 +78,6 @@ public class VentanaMovimientoArea extends javax.swing.JFrame implements Observe
             }
         });
         jScrollPane1.setViewportView(tablaArea);
-        if (tablaArea.getColumnModel().getColumnCount() > 0) {
-            tablaArea.getColumnModel().getColumn(1).setHeaderValue("Presupuesto anual");
-        }
 
         jLabel2.setText("Empleados");
 
@@ -110,9 +107,17 @@ public class VentanaMovimientoArea extends javax.swing.JFrame implements Observe
 
             },
             new String [] {
-                "Nombre", "Presupuesto Anual"
+                "Nombre"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane3.setViewportView(tablaNuevaArea);
 
         jLabel3.setText("Nueva Área");
@@ -162,26 +167,28 @@ public class VentanaMovimientoArea extends javax.swing.JFrame implements Observe
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(60, 60, 60)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46)
                         .addComponent(btnCambiarEmpledoArea))
                     .addComponent(jLabel3))
-                .addGap(185, 185, 185))
+                .addGap(58, 58, 58))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,13 +196,13 @@ public class VentanaMovimientoArea extends javax.swing.JFrame implements Observe
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(34, 34, 34)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4)))
+                        .addComponent(jLabel1))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel3)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -205,7 +212,7 @@ public class VentanaMovimientoArea extends javax.swing.JFrame implements Observe
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(179, 179, 179)
+                        .addGap(174, 174, 174)
                         .addComponent(btnCambiarEmpledoArea)))
                 .addContainerGap(72, Short.MAX_VALUE))
         );
@@ -256,7 +263,9 @@ public class VentanaMovimientoArea extends javax.swing.JFrame implements Observe
             javax.swing.JOptionPane.showMessageDialog(this, "Falta seleccionar elementos.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
 
         }
-
+        
+        tablaArea.clearSelection();
+        
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCambiarEmpledoAreaActionPerformed
 
@@ -264,7 +273,7 @@ public class VentanaMovimientoArea extends javax.swing.JFrame implements Observe
         // TODO add your handling code here:
         actualizarAreas();
         cargarMeses();
-        
+        areasSinLaSeleccionada();
     }//GEN-LAST:event_formWindowOpened
 
     private void tablaAreaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAreaMouseClicked
@@ -275,6 +284,8 @@ public class VentanaMovimientoArea extends javax.swing.JFrame implements Observe
         int filaSeleccionada = tablaArea.getSelectedRow();
         String nombreAreaSeleccionada = (String) tablaArea.getValueAt(filaSeleccionada, 0);
         actualizarEmpleados(this.sistema.getAreaPorNOmbre(nombreAreaSeleccionada));
+        
+        
         
     }//GEN-LAST:event_tablaAreaMouseClicked
 
@@ -288,8 +299,8 @@ public class VentanaMovimientoArea extends javax.swing.JFrame implements Observe
             Area area = this.sistema.getAreasOrdenadasPorNombre().get(i);
 
                 modeloTabla.addRow(new Object[]{
-                    area.getNombre(),
-                    area.getPresupuesto(),
+                    area.getNombre()
+                    
 
                     });
 
@@ -334,6 +345,7 @@ public class VentanaMovimientoArea extends javax.swing.JFrame implements Observe
             modeloTabla.addRow(new Object[]{
                 area.getNombre(),
                 area.getPresupuesto(),
+                this.sistema.getDistribucionPresupuesto().getPresupuestoDisponible(area),
 
                 });
 
@@ -366,6 +378,7 @@ public class VentanaMovimientoArea extends javax.swing.JFrame implements Observe
     public void update(Observable o, Object arg) {
         if (o == sistema) {
             actualizarAreas();
+            areasSinLaSeleccionada();
         }
     }
 

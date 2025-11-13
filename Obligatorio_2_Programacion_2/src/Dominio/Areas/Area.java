@@ -12,7 +12,7 @@ import java.util.*;
 public class Area {
     private String nombre;
     private String descripcion;
-    private double presupuesto;
+    final private double presupuesto;
     private ArrayList<Empleado> listaEmpleados;
     
     public Area(){
@@ -25,7 +25,7 @@ public class Area {
     public Area(String nombre, String descripcion, double presupuesto) {
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.presupuesto = presupuesto;
+        this.presupuesto = presupuesto; // 100% presupuesto
         this.listaEmpleados = new ArrayList<Empleado>(); 
     }
 
@@ -49,9 +49,7 @@ public class Area {
         this.descripcion = descripcion;
     }
 
-    public void setPresupuesto(double presupuesto) {
-        this.presupuesto = presupuesto;
-    }
+    
     
     public void agregarEmpleado(Empleado empleado){
         this.listaEmpleados.add(empleado);

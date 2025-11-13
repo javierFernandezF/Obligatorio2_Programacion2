@@ -9,7 +9,9 @@ import Dominio.Areas.ListaAreas;
 import Dominio.Personas.Empleado;
 import Dominio.Personas.ListaPersonas;
 import Dominio.Personas.Manager;
+import Historial.ListaCambioArea;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Observable;
 
 /**
@@ -19,10 +21,12 @@ import java.util.Observable;
 public class Sistema extends Observable{
     private ListaPersonas listaPersonas;
     private ListaAreas listaAreas;
+    private ListaCambioArea listaCambioArea;
 
     public Sistema() {
         this.listaPersonas = new ListaPersonas();
         this.listaAreas = new ListaAreas();
+        this.listaCambioArea = new ListaCambioArea();
     }
 
     public ListaPersonas getListaPersonas() {
@@ -48,29 +52,12 @@ public class Sistema extends Observable{
     
     
     
-    public void restarPresupuestoArea(Area area, int cantidadARestar){
-        double nuevoPresupuesto = area.getPresupuesto() - cantidadARestar;
-        
-        area.setPresupuesto(nuevoPresupuesto);           
-                
-    }
-    
-    public void sumarPresupuestoArea(Area area, int cantidadASumar){
-        double nuevoPresupuesto = area.getPresupuesto() - cantidadASumar;
-        
-        area.setPresupuesto(nuevoPresupuesto); 
-    }
     
     public boolean validarPresupuestoArea(Empleado empleado, Area area, int mesesDeTrabajo){
-        
-        boolean daElPresupuesto = false;
         int salarioMensual = empleado.getSalarioMensual();
+        double costoTotal = salarioMensual * mesesDeTrabajo;
         
-        
-        daElPresupuesto = salarioMensual*mesesDeTrabajo <= area.getPresupuesto();
-        
-        
-        return daElPresupuesto;
+        return listaCambioArea.validarPresupuesto(area, costoTotal);
     }
     
     public void agregarEmpleado(Empleado empleado, Area area){
@@ -82,9 +69,7 @@ public class Sistema extends Observable{
             this.listaAreas.agregarEmpleadoAArea(area, empleado);
             this.listaPersonas.agregarEmpleado(empleado);
             
-            
-            
-            restarPresupuestoArea(area, empleado.getSalarioMensual()*mesesDeTrabajo);
+            listaCambioArea.agregarEmpleadoNuevo(empleado, area.getNombre());
             
             setChanged();
             notifyObservers();
@@ -102,19 +87,11 @@ public class Sistema extends Observable{
         if(validarPresupuestoArea(empleado,nuevaArea,mesesATrabajarEnNuevaArea)){
             
             Area areaAnterior = getAreaDelEmpleado(empleado);
-            int salarioMensual = empleado.getSalarioMensual();
             
-            Area areaAnt = this.listaAreas.getAreaPorNombre(areaAnterior.getNombre());
-            int presupuestoLiberado = salarioMensual * mesesATrabajarEnNuevaArea;
-            areaAnt.setPresupuesto((int) (areaAnt.getPresupuesto() + presupuestoLiberado));
+            listaCambioArea.agregarCambio(empleado, areaAnterior.getNombre(), nuevaArea.getNombre(), mesDeEntrada, 12);
             
-            areaAnt.borrarUnEmpleado(empleado);
-            
-            Area areaNueva = this.listaAreas.getAreaPorNombre(nuevaArea.getNombre());
-            int presupuestoRequerido = salarioMensual * mesesATrabajarEnNuevaArea;
-            areaNueva.setPresupuesto((int) (areaNueva.getPresupuesto() - presupuestoRequerido));
-            
-            areaNueva.agregarEmpleado(empleado);
+            areaAnterior.borrarUnEmpleado(empleado);
+            nuevaArea.agregarEmpleado(empleado);
             
             setChanged();
             notifyObservers();
@@ -189,5 +166,67 @@ public class Sistema extends Observable{
          setChanged();
         notifyObservers();
      }
+     
+     public ListaCambioArea getListaCambioArea() {
+         return listaCambioArea;
+     }
+     
+     public double getPresupuestoDisponible(Area area) {
+         return listaCambioArea.getPresupuestoDisponible(area);
+     }
+     
+      //le da al reporte acceso a todos los empleados
+     public ArrayList<Empleado> getEmpleados() {
+         return this.listaPersonas.getSoloEmpleados();
+     }
+     
+     //le da al reporte acceso a todas las áreas registradas en el sistema
+     public ArrayList<Area> getAreas() {
+         return this.listaAreas.getAreas();
+     }
+     
+     //obtiene y devuelve los empleados que pertenecen a un área específica
+     //y los ordena por nombre
+     
+     public ArrayList<Empleado> getEmpleadosDe(Area area) {
+         ArrayList<Empleado> out = listaAreas.getEmpleadosDe(area);
+        out.sort(Comparator.comparing(Empleado::getNombre));
+        return out;
+     }
+     
+     // Cálculos del reporte Estado de Áreas
+    public double salarioAnual(Empleado e) {
+        return e.getSalarioMensual() * 12.0;
+    }
+
+    public double totalAsignado(Area a) {
+        double total = 0;
+        for (Empleado e : getEmpleadosDe(a)) total += salarioAnual(e);
+        return total;
+    }
+
+    public double porcentajeAsignado(Area a) {
+        double presu = a.getPresupuesto();
+        if (presu <= 0) return 0.0;
+        return (totalAsignado(a) * 100.0) / presu;
+    }
+
+    public ArrayList<Area> getAreasOrdenadasPorPorcentajeDesc() {
+        ArrayList<Area> copia = new ArrayList<>(getAreas());
+        copia.sort((a,b) -> Double.compare(porcentajeAsignado(b), porcentajeAsignado(a)));
+        return copia;
+    }
+
+    public double minSalarioEn(Area a){
+        double m = Double.POSITIVE_INFINITY;
+        for (Empleado e: getEmpleadosDe(a)) m = Math.min(m, e.getSalarioMensual());
+        return (m==Double.POSITIVE_INFINITY)? 0 : m;
+    }
+
+    public double maxSalarioEn(Area a){
+        double m = 0;
+        for (Empleado e: getEmpleadosDe(a)) m = Math.max(m, e.getSalarioMensual());
+        return m;
+    }
    
 }

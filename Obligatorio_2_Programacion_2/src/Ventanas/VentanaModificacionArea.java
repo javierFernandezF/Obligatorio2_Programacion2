@@ -146,14 +146,27 @@ public class VentanaModificacionArea extends javax.swing.JFrame implements Obser
 
     private void listaAreasValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaAreasValueChanged
         try{
+            String areaSeleccionada;
+            Area areaParaEditar;
+            double presupuestoOriginal;
+            double presupuestoUsado;
+            double presupuestoDisponible;
             
-        String areaSeleccionada = listaAreas.getSelectedValue();
-        
-        Area areaParaEditar = this.sistema.getAreaPorNOmbre(areaSeleccionada);
-        
-        areaInputNombre.setText(areaParaEditar.getNombre());
-        areaInputPresupuesto.setText(String.valueOf(areaParaEditar.getPresupuesto()));
-        areaInputDescripcion.setText(areaParaEditar.getDescripcion());
+            areaSeleccionada = listaAreas.getSelectedValue();
+            areaParaEditar = this.sistema.getAreaPorNOmbre(areaSeleccionada);
+            
+            presupuestoOriginal = areaParaEditar.getPresupuesto();
+            presupuestoUsado = this.sistema.getListaCambioArea().getPresupuestoUsado(areaParaEditar);
+            presupuestoDisponible = this.sistema.getPresupuestoDisponible(areaParaEditar);
+            
+            areaInputNombre.setText(areaParaEditar.getNombre());
+            areaInputPresupuesto.setText(String.valueOf(presupuestoOriginal));
+            areaInputDescripcion.setText(areaParaEditar.getDescripcion());
+            
+            // Mostrar información adicional del presupuesto
+            String infoPresupuesto = String.format("Original: $%.0f | Usado: $%.0f | Disponible: $%.0f", 
+                                                  presupuestoOriginal, presupuestoUsado, presupuestoDisponible);
+            javax.swing.JOptionPane.showMessageDialog(this, infoPresupuesto, "Información de Presupuesto", javax.swing.JOptionPane.INFORMATION_MESSAGE);
         
         }catch (NullPointerException e){
             javax.swing.JOptionPane.showMessageDialog(this, "Se debe selecionar un area", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -171,16 +184,15 @@ public class VentanaModificacionArea extends javax.swing.JFrame implements Obser
     }//GEN-LAST:event_formWindowOpened
 
     private void btnEditarAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarAreaActionPerformed
-
-        String areaSeleccionada = listaAreas.getSelectedValue();
+        String areaSeleccionada;
+        Area areaParaEditar;
+        String descripcion;
         
-        Area areaParaEditar = this.sistema.getAreaPorNOmbre(areaSeleccionada);
-
-        String descripcion = areaInputDescripcion.getText();
+        areaSeleccionada = listaAreas.getSelectedValue();
+        areaParaEditar = this.sistema.getAreaPorNOmbre(areaSeleccionada);
+        descripcion = areaInputDescripcion.getText();
         
         areaParaEditar.setDescripcion(descripcion);
-
-
 
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEditarAreaActionPerformed
@@ -191,7 +203,9 @@ public class VentanaModificacionArea extends javax.swing.JFrame implements Obser
    
     
     private void actualizarAreas(){
-        ArrayList<String> nombresAreas = new ArrayList<>();
+        ArrayList<String> nombresAreas;
+        
+        nombresAreas = new ArrayList<>();
 
         for(int i = 0; i < this.sistema.getAreasOrdenadasPorNombre().size(); i++){
           nombresAreas.add(this.sistema.getAreasOrdenadasPorNombre().get(i).getNombre());

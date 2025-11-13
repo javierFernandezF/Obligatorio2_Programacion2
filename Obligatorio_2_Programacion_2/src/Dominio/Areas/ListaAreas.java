@@ -135,5 +135,21 @@ public class ListaAreas{
        
     }
     
+    //Obtiene empleados por area
+    public ArrayList<Empleado> getEmpleadosDe(Area area){
+        ArrayList<Empleado> empleadosDelArea = new ArrayList<Empleado>();
+        boolean areaEncontrada = false; 
+        for(int i = 0; i < this.areas.size() && !areaEncontrada; i++){
+            Area areaActual = this.areas.get(i);
+            if(areaActual.equals(area)){
+                areaEncontrada = true; 
+                empleadosDelArea = areaActual.getListaEmpleados();
+  
+            }
+        }
+        
+            return empleadosDelArea;  
+    }
+    
     
 }

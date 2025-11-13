@@ -248,110 +248,105 @@ public class VentanaAltaEmpleado extends javax.swing.JFrame implements Observer 
     private void btnIngresarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarEmpleadoActionPerformed
         
         try{
+            String nombre;
+            int cedula;
+            String celular;
+            int salarioMensual;
+            int filaManagerSeleccionada;
+            Object valorCedula;
+            int cedulaManager;
+            Manager manager;
+            String areaNombre;
+            Area area;
+            Empleado empleado;
             
-        String nombre = inputNombre.getText();
-        int cedula = Integer.parseInt(inputCedula.getText());
-        String celular = inputCelular.getText();
-        int salarioMensual = Integer.parseInt(inputSalarioMensual.getText());
-        
-        
-        int filaManagerSeleccionada = tablaManagers.getSelectedRow();
-        
-        Object valorCedula = tablaManagers.getValueAt(filaManagerSeleccionada, 1);
-        int cedulaManager = Integer.parseInt(valorCedula.toString());
-        
-        Manager manager = sistema.getListaPersonas().getManagerPorCedula(cedulaManager);
-        
-                
-                
-        String areaNombre = listaAreas.getSelectedValue();
-        Area area = this.sistema.getListaAreas().getAreaPorNombre(areaNombre);
-        
-        
-        
-        
-        Empleado empleado = new Empleado(nombre,cedula,celular,salarioMensual,manager);
-        
-        if (!this.sistema.validarPresupuestoArea(empleado, area, 12)) {
-            javax.swing.JOptionPane.showMessageDialog(this, "El área no cuenta con presupuesto disponible para cubrir el salario.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-            return;
-
-        }
-
-        
-        
-        this.sistema.agregarEmpleado(empleado, area);
-       
-        guardarCv(String.valueOf(cedula), txtEmpleadoCv);
+            nombre = inputNombre.getText();
+            cedula = Integer.parseInt(inputCedula.getText());
+            celular = inputCelular.getText();
+            salarioMensual = Integer.parseInt(inputSalarioMensual.getText());
+            
+            filaManagerSeleccionada = tablaManagers.getSelectedRow();
+            valorCedula = tablaManagers.getValueAt(filaManagerSeleccionada, 1);
+            cedulaManager = Integer.parseInt(valorCedula.toString());
+            manager = sistema.getListaPersonas().getManagerPorCedula(cedulaManager);
+            
+            areaNombre = listaAreas.getSelectedValue();
+            area = this.sistema.getListaAreas().getAreaPorNombre(areaNombre);
+            
+            empleado = new Empleado(nombre,cedula,celular,salarioMensual,manager);
+            
+            if (!this.sistema.validarPresupuestoArea(empleado, area, 12)) {
+                javax.swing.JOptionPane.showMessageDialog(this, "El área no cuenta con presupuesto disponible para cubrir el salario.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            this.sistema.agregarEmpleado(empleado, area);
+            guardarCv(String.valueOf(cedula), txtEmpleadoCv);
         
         }catch (NumberFormatException e){
             javax.swing.JOptionPane.showMessageDialog(this, "La cédula debe escribirse sin putnos ni guion y la antiguedad en años enteros.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-
         }
-
 
         // TODO add your handling code here:
     }//GEN-LAST:event_btnIngresarEmpleadoActionPerformed
     
     public void guardarCv(String cedula, JTextArea texto){
+        Path carpetaCvs;
+        String nombreArchivo;
+        Path archivoCv;
+        ArchivoGrabacion arch;
+        String[] textoCvPorLinea;
         
-        Path carpetaCvs = Paths.get("cvs");
+        carpetaCvs = Paths.get("cvs");
 
         try{
+            Files.createDirectories(carpetaCvs); 
             
-        Files.createDirectories(carpetaCvs); 
-        
-        String nombreArchivo = "CV" + cedula;
-        Path archivoCv = carpetaCvs.resolve(nombreArchivo);
+            nombreArchivo = "CV" + cedula;
+            archivoCv = carpetaCvs.resolve(nombreArchivo);
+            arch = new ArchivoGrabacion(archivoCv.toString(), false);
+            textoCvPorLinea = texto.getText().split("\\R");
+            
+            for (int i = 0; i < textoCvPorLinea.length; i++) {
+                arch.grabarLinea(textoCvPorLinea[i]);
+            }
 
-        
-        
-        ArchivoGrabacion arch = new ArchivoGrabacion(archivoCv.toString(), false);
-        
-        String[] textoCvPorLinea = texto.getText().split("\\R");
-        for (String linea : textoCvPorLinea) {
-        arch.grabarLinea(linea);
-        }
-
-        arch.cerrar();
+            arch.cerrar();
         
         }catch (IOException e) {
             System.out.println("Error al hacer el archivo.");
             javax.swing.JOptionPane.showMessageDialog(this, "No se pudo guardar el CV.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-
         }   
-        
-        
 
     }
     
     
     public void actualizarEmpleados() {
-    javax.swing.table.DefaultTableModel modeloTabla = (javax.swing.table.DefaultTableModel) tablaEmpleados.getModel();
-    modeloTabla.setRowCount(0); 
-    
-    for (int i = 0; i < this.sistema.getListaPersonas().getEmpleadosOrdenados().size(); i++) {
+        javax.swing.table.DefaultTableModel modeloTabla;
+        Empleado empleado;
         
-        Empleado empleado = this.sistema.getListaPersonas().getEmpleadosOrdenados().get(i);
+        modeloTabla = (javax.swing.table.DefaultTableModel) tablaEmpleados.getModel();
+        modeloTabla.setRowCount(0); 
         
-        
-        
-        modeloTabla.addRow(new Object[]{
-            empleado.getNombre(),
-            empleado.getCedula(),
-            empleado.getCelular(),
-            empleado.getSalarioMensual(),
-            empleado.getManager().getNombre(),
-            this.sistema.getAreaDelEmpleado(empleado) != null ? this.sistema.getAreaDelEmpleado(empleado).getNombre() : "Sin área",
-            });
-        
+        for (int i = 0; i < this.sistema.getListaPersonas().getEmpleadosOrdenados().size(); i++) {
+            empleado = this.sistema.getListaPersonas().getEmpleadosOrdenados().get(i);
+            
+            modeloTabla.addRow(new Object[]{
+                empleado.getNombre(),
+                empleado.getCedula(),
+                empleado.getCelular(),
+                empleado.getSalarioMensual(),
+                empleado.getManager().getNombre(),
+                this.sistema.getAreaDelEmpleado(empleado) != null ? this.sistema.getAreaDelEmpleado(empleado).getNombre() : "Sin área",
+                });
         }
-
     }
     
     private void actualizarAreas(){
+        ArrayList<String> nombresAreas;
+        
         System.out.println("entra actualizar areas");
-        ArrayList<String> nombresAreas = new ArrayList<>();
+        nombresAreas = new ArrayList<>();
 
         for(int i = 0; i < this.sistema.getAreasOrdenadasPorNombre().size(); i++){
           nombresAreas.add(this.sistema.getAreasOrdenadasPorNombre().get(i).getNombre());
@@ -362,17 +357,19 @@ public class VentanaAltaEmpleado extends javax.swing.JFrame implements Observer 
     }
     
     public void actualizarManagers() {
-    javax.swing.table.DefaultTableModel modeloTabla = (javax.swing.table.DefaultTableModel) tablaManagers.getModel();
-    modeloTabla.setRowCount(0); 
-    
-    for (int i = 0; i < this.sistema.getManagersOrdenados().size(); i++) {
+        javax.swing.table.DefaultTableModel modeloTabla;
+        Manager manager;
         
-        Manager manager = this.sistema.getManagersOrdenados().get(i);
+        modeloTabla = (javax.swing.table.DefaultTableModel) tablaManagers.getModel();
+        modeloTabla.setRowCount(0); 
         
-        modeloTabla.addRow(new Object[]{
-            manager.getNombre(),
-            manager.getCedula(),
-            });
+        for (int i = 0; i < this.sistema.getManagersOrdenados().size(); i++) {
+            manager = this.sistema.getManagersOrdenados().get(i);
+            
+            modeloTabla.addRow(new Object[]{
+                manager.getNombre(),
+                manager.getCedula(),
+                });
         }
     }
     
