@@ -56,16 +56,17 @@ public class VentanaReporteMovimientos extends javax.swing.JFrame implements Obs
         DefaultTableModel model = (DefaultTableModel) tablaMovimientos.getModel();
     model.setRowCount(0); //elimina las filas de la tabla
     movimientos.sort((m1, m2) -> Integer.compare(m1.getMesInicio(), m2.getMesInicio()));//Ordena la lista segun el mes,
-    for (CambioArea mov : movimientos) {
-        // Mostrar solo movimientos con área de origen válida
+    for (CambioArea mov : movimientos) { //recorre la lista de objetos CambioArea en la lista de movimientos
+        // Mostrar solo movimientos con área de origen, si no tiene area de origen pasa al siguiente movimiento
         if (mov.getNombreAreaAnterior() == null || mov.getNombreAreaAnterior().isEmpty()) {
             continue; // Ignorar las altas
         }
-        String mes = nombreMes(mov.getMesInicio());
-        String areaOrig = mov.getNombreAreaAnterior();
-        String areaDest = mov.getNombreAreaNueva();
-        String empleado = mov.getEmpleado().getNombre();
-        model.addRow(new Object[]{mes, areaOrig, areaDest, empleado});
+        String mes = nombreMes(mov.getMesInicio()); //obtiene el numero del mes del cambio y lo cambia a nombre
+       
+        String areaOrig = mov.getNombreAreaAnterior(); //guarda area de origen
+        String areaDest = mov.getNombreAreaNueva(); //guarda area destino
+        String empleado = mov.getEmpleado().getNombre();//guarda nombre empleado
+        model.addRow(new Object[]{mes, areaOrig, areaDest, empleado}); //le paso un arreglo de objetos para que genere la fila
     }
     }
 
@@ -76,12 +77,14 @@ public class VentanaReporteMovimientos extends javax.swing.JFrame implements Obs
     }
 
     private ArrayList<CambioArea> filtrarMovimientos() {
+        // Obtiene el valor seleccionado en cada JComboBox de filtro (mes, área y empleado)
         String selMes = (String) selectMes.getSelectedItem();
         String selArea = (String) selectArea.getSelectedItem();
         String selEmpleado = (String) selectEmpleado.getSelectedItem();
 
         ArrayList<CambioArea> todos = sistema.getListaCambioArea().getListaCambios();
         ArrayList<CambioArea> filtrados = new ArrayList<>();
+        //Recorre la lista de movimientos, dependiendo del filtro es lo que muestra
         for (CambioArea mov : todos) {
             boolean filtrarMes = selMes.equals("Todos") || nombreMes(mov.getMesInicio()).equals(selMes);
             boolean filtrarArea = selArea.equals("Todas") ||
@@ -275,13 +278,14 @@ public class VentanaReporteMovimientos extends javax.swing.JFrame implements Obs
     }//GEN-LAST:event_btnfiltrarActionPerformed
 
     private void btnborrarfiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnborrarfiltroActionPerformed
-         selectMes.setSelectedIndex(0);
+         selectMes.setSelectedIndex(0); //Cuando selecciono borrar filtro, vuelve a la posicion 0, que es "todos" en cada select
         selectArea.setSelectedIndex(0);
         selectEmpleado.setSelectedIndex(0);
         cargarTablaMovimientos(sistema.getListaCambioArea().getListaCambios());// TODO add your handling code here:
     }//GEN-LAST:event_btnborrarfiltroActionPerformed
 
-    private void exportarReporteActionPerformed(java.awt.event.ActionEvent evt) {                                            
+    private void exportarReporteActionPerformed(java.awt.event.ActionEvent evt) {   
+        //Intentar hacerlo con hasNextLine y nextLine()
         JFileChooser chooser = new JFileChooser();
         chooser.setDialogTitle("Guardar reporte de movimientos");
         if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
@@ -306,7 +310,7 @@ public class VentanaReporteMovimientos extends javax.swing.JFrame implements Obs
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this, "Error al exportar");
             }
-        } // TODO add your handling code here:
+        }
     }   
     @Override
     public void update(Observable o, Object arg) {
