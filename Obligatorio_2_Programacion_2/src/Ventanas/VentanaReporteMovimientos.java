@@ -51,7 +51,7 @@ public class VentanaReporteMovimientos extends javax.swing.JFrame implements Obs
             selectArea.addItem(area.getNombre());
         }
     }
-
+//revisar
     private void cargarTablaMovimientos(ArrayList<CambioArea> movimientos) {
         DefaultTableModel model = (DefaultTableModel) tablaMovimientos.getModel();
     model.setRowCount(0); //elimina las filas de la tabla
