@@ -159,6 +159,11 @@ public class PanelPrincipal extends javax.swing.JFrame {
         menuReportes.add(MenuReporteDeAreas);
 
         MenuReporteDeMovimientos.setText("Reporte de movimientos");
+        MenuReporteDeMovimientos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuReporteDeMovimientosActionPerformed(evt);
+            }
+        });
         menuReportes.add(MenuReporteDeMovimientos);
 
         menuPrincipal.add(menuReportes);
@@ -245,6 +250,14 @@ public class PanelPrincipal extends javax.swing.JFrame {
 
         // TODO add your handling code here:
     }//GEN-LAST:event_MenuReporteDeAreasActionPerformed
+
+    private void MenuReporteDeMovimientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuReporteDeMovimientosActionPerformed
+
+        java.awt.EventQueue.invokeLater(() -> new VentanaReporteMovimientos(sistema).setVisible(true));
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuReporteDeMovimientosActionPerformed
 
    
 
