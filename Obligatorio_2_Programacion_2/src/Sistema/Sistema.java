@@ -10,6 +10,7 @@ import Dominio.Personas.Empleado;
 import Dominio.Personas.ListaPersonas;
 import Dominio.Personas.Manager;
 import Historial.ListaCambioArea;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Observable;
@@ -18,7 +19,7 @@ import java.util.Observable;
  *
  * @author javierfernandez
  */
-public class Sistema extends Observable{
+public class Sistema extends Observable implements Serializable{
     private ListaPersonas listaPersonas;
     private ListaAreas listaAreas;
     private ListaCambioArea listaCambioArea;

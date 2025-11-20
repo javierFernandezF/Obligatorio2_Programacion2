@@ -5,12 +5,13 @@
 package Historial;
 
 import Dominio.Personas.Empleado;
+import java.io.Serializable;
 
 /**
  *
  * @author javierfernandez
  */
-public class CambioArea {
+public class CambioArea implements Serializable{
     private Empleado empleado;
     private String nombreAreaAnterior;
     private String nombreAreaNueva;

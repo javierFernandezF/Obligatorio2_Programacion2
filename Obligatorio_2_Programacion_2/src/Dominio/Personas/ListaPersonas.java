@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Dominio.Personas;
+import java.io.Serializable;
 import java.util.*;
 
 
@@ -10,7 +11,7 @@ import java.util.*;
  *
  * @author javierfernandez
  */
-public class ListaPersonas{
+public class ListaPersonas implements Serializable{
     private ArrayList<Persona> listaPersonas;
 
     public ListaPersonas() {

@@ -4,12 +4,14 @@
  */
 package Dominio.Personas;
 
+import java.io.Serializable;
+
 
 /**
  *
  * @author javierfernandez
  */
-public class Empleado extends Persona {
+public class Empleado extends Persona implements Serializable{
     private int salarioMensual;
     private Manager manager;
 

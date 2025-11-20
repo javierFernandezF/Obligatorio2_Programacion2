@@ -5,7 +5,9 @@
 package Ventanas;
 
 import DatosPrecargados.DatosPrecargados;
+import Persistencia.Persistencia;
 import Sistema.Sistema;
+import java.io.IOException;
 
 /**
  *
@@ -102,8 +104,17 @@ public class VentanaInicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSistemaGuardadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSistemaGuardadoActionPerformed
-    
-        // TODO add your handling code here:
+        
+        try {
+            this.sistema = Persistencia.cargarSistema();
+                    } catch (IOException ex) {
+            System.getLogger(VentanaInicio.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        } catch (ClassNotFoundException ex) {
+            System.getLogger(VentanaInicio.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        
+        java.awt.EventQueue.invokeLater(() -> new PanelPrincipal(this.sistema).setVisible(true));
+        this.setVisible(false);
     }//GEN-LAST:event_btnSistemaGuardadoActionPerformed
 
     private void btnSistemaConDatosPrecargadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSistemaConDatosPrecargadosActionPerformed

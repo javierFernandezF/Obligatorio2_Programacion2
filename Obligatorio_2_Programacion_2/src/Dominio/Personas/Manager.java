@@ -4,11 +4,13 @@
  */
 package Dominio.Personas;
 
+import java.io.Serializable;
+
 /**
  *
  * @author javierfernandez
  */
-public class Manager extends Persona  {
+public class Manager extends Persona implements Serializable {
     
     private int anosDeAntiguedad;
     

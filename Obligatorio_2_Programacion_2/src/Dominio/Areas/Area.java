@@ -4,12 +4,13 @@
  */
 package Dominio.Areas;
 import Dominio.Personas.Empleado;
+import java.io.Serializable;
 import java.util.*;
 /**
  *
  * @author javierfernandez
  */
-public class Area {
+public class Area implements Serializable{
     final private String nombre;
     private String descripcion;
     final private double presupuesto;
