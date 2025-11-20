@@ -17,15 +17,21 @@ import java.nio.charset.StandardCharsets;
  * @author javierfernandez
  */
 public class ServicioGemini {
-    private static final String API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent";
+    private static final String API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
     private final String apiKey;
     
     public ServicioGemini() {
+        // Verificar que la API key esté configurada
         this.apiKey = System.getenv("ERP_API_KEY");
-        
         if (apiKey == null || apiKey.isEmpty()) {
             throw new IllegalStateException("La variable de entorno ERP_API_KEY no está configurada");
         }
+    }
+    
+    // Sobrecarga para mantener compatibilidad con la versión original
+    public String generarReporteInteligente(String areaOrigen, String descripcionOrigen, 
+                                          String areaDestino, String cvEmpleado) throws Exception {
+        return generarReporteInteligente(areaOrigen, descripcionOrigen, areaDestino, "", cvEmpleado);
     }
     
     public String generarReporteInteligente(String areaOrigen, String descripcionOrigen, 
@@ -38,7 +44,7 @@ public class ServicioGemini {
             // Construir el JSON de la petición
             String jsonRequest = construirJsonRequest(prompt);
             
-            // Realizar la petición HTTP
+            // Realizar la petición HTTP a Gemini 2.5 Flash
             URL url = new URL(API_URL + "?key=" + apiKey);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
@@ -79,13 +85,15 @@ public class ServicioGemini {
     }
     
     private String construirPrompt(String areaOrigen, String descripcionOrigen, 
-                                 String areaDestino, String cvEmpleado) {
+                                 String areaDestino, String descripcionDestino, 
+                                 String cvEmpleado) {
         return "Eres un consultor de recursos humanos experto. Analiza el siguiente escenario de movimiento de empleado:\n\n" +
                "ÁREA DE ORIGEN:\n" +
                "Nombre: " + areaOrigen + "\n" +
                "Descripción: " + descripcionOrigen + "\n\n" +
                "ÁREA DE DESTINO:\n" +
-               "Nombre: " + areaDestino + "\n\n" +
+               "Nombre: " + areaDestino + "\n" +
+               "Descripción: " + descripcionDestino + "\n\n" +
                "PERFIL DEL EMPLEADO:\n" +
                cvEmpleado + "\n\n" +
                "Por favor, proporciona un análisis detallado que incluya:\n" +
