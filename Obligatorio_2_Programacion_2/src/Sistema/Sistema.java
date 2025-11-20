@@ -10,6 +10,7 @@ import Dominio.Personas.Empleado;
 import Dominio.Personas.ListaPersonas;
 import Dominio.Personas.Manager;
 import Historial.ListaCambioArea;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Observable;
@@ -18,7 +19,7 @@ import java.util.Observable;
  *
  * @author javierfernandez
  */
-public class Sistema extends Observable{
+public class Sistema extends Observable implements Serializable{
     private ListaPersonas listaPersonas;
     private ListaAreas listaAreas;
     private ListaCambioArea listaCambioArea;
@@ -211,9 +212,19 @@ public class Sistema extends Observable{
     }
 
     public double porcentajeAsignado(Area a) {
+        
+        /*
         double presu = a.getPresupuesto();
         if (presu <= 0) return 0.0;
         return (totalAsignado(a) * 100.0) / presu;
+        */
+        
+        //Cambie aca paara tener en cuenta cuando un empleado tiene meses en varias areas
+        double presupuesto = a.getPresupuesto();
+        double presupuestoUsado = this.listaCambioArea.calcularPresupuestoUsadoPorArea(a);
+        
+        return (presupuestoUsado*100)/presupuesto;
+        
     }
 
     public ArrayList<Area> getAreasOrdenadasPorPorcentajeDesc() {

@@ -6,13 +6,14 @@ package Historial;
 
 import Dominio.Areas.Area;
 import Dominio.Personas.Empleado;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author javierfernandez
  */
-public class ListaCambioArea {
+public class ListaCambioArea implements Serializable{
     private ArrayList<CambioArea> listaCambios;
     
     public ListaCambioArea() {

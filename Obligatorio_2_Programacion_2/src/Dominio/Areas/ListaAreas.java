@@ -4,6 +4,7 @@
  */
 package Dominio.Areas;
 import Dominio.Personas.Empleado;
+import java.io.Serializable;
 import java.util.*;
 
 
@@ -11,7 +12,7 @@ import java.util.*;
  *
  * @author javierfernandez
  */
-public class ListaAreas{
+public class ListaAreas implements Serializable{
     private ArrayList<Area> areas;
     
     public ListaAreas(){

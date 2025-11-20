@@ -4,7 +4,9 @@
  */
 package Ventanas;
 
+import Persistencia.Persistencia;
 import Sistema.Sistema;
+import java.io.IOException;
 
 /**
  *
@@ -52,6 +54,11 @@ public class PanelPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ERP Empresarial");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         lbBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Ventanas/img/fondoAppChico.png"))); // NOI18N
 
@@ -258,6 +265,19 @@ public class PanelPrincipal extends javax.swing.JFrame {
 
         // TODO add your handling code here:
     }//GEN-LAST:event_MenuReporteDeMovimientosActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        
+        try {
+            //Guardar los datos
+            
+            Persistencia.guardarSistema(sistema);
+        
+            
+        } catch (IOException ex) {
+            System.getLogger(PanelPrincipal.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+            }//GEN-LAST:event_formWindowClosing
 
    
 

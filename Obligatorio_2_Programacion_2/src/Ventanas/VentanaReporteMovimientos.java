@@ -123,6 +123,7 @@ public class VentanaReporteMovimientos extends javax.swing.JFrame implements Obs
         exportarReporte = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Reporte de movimientos");
 
         jPanel2.setForeground(new java.awt.Color(255, 102, 0));
 
