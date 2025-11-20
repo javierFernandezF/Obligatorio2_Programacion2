@@ -155,6 +155,11 @@ public class PanelPrincipal extends javax.swing.JFrame {
 
         MenuReporteInteligente.setText("Reporte inteligente");
         MenuReporteInteligente.setToolTipText("");
+        MenuReporteInteligente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuReporteInteligenteActionPerformed(evt);
+            }
+        });
         menuReportes.add(MenuReporteInteligente);
 
         MenuReporteDeAreas.setText("Reporte de estado de áreas");
@@ -278,6 +283,10 @@ public class PanelPrincipal extends javax.swing.JFrame {
             System.getLogger(PanelPrincipal.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
             }//GEN-LAST:event_formWindowClosing
+
+    private void MenuReporteInteligenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuReporteInteligenteActionPerformed
+        java.awt.EventQueue.invokeLater(() -> new VentanaReporteInteligente(sistema).setVisible(true));
+    }//GEN-LAST:event_MenuReporteInteligenteActionPerformed
 
    
 
