@@ -4,7 +4,6 @@
  */
 package Ventanas;
 
-<<<<<<< HEAD
 import Dominio.Areas.Area;
 import Dominio.Personas.Empleado;
 import Sistema.Sistema;
@@ -22,29 +21,16 @@ import javax.swing.JOptionPane;
  */
 public class VentanaReporteInteligente extends javax.swing.JFrame {
     private Sistema sistema;
-=======
-/**
- *
- * @author Camila
- */
-public class VentanaReporteInteligente extends javax.swing.JFrame {
-    
->>>>>>> ae1070a29913806d938ca049bf12c865e57d2789
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaReporteInteligente.class.getName());
 
     /**
      * Creates new form VentanaReporteInteligente
      */
-<<<<<<< HEAD
     public VentanaReporteInteligente(Sistema sistema) {
         this.sistema = sistema;
 
         initComponents();
         actualizarAreas();
-=======
-    public VentanaReporteInteligente() {
-        initComponents();
->>>>>>> ae1070a29913806d938ca049bf12c865e57d2789
     }
 
     /**
@@ -56,7 +42,6 @@ public class VentanaReporteInteligente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-<<<<<<< HEAD
         btnGenerarReporte = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaEmpleados = new javax.swing.JTable();
@@ -179,15 +164,11 @@ public class VentanaReporteInteligente extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(49, Short.MAX_VALUE))
         );
-=======
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
->>>>>>> ae1070a29913806d938ca049bf12c865e57d2789
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-<<<<<<< HEAD
             .addGroup(layout.createSequentialGroup()
                 .addComponent(btnGenerarReporte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 6, Short.MAX_VALUE))
@@ -195,19 +176,11 @@ public class VentanaReporteInteligente extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnGenerarReporte, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-=======
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
->>>>>>> ae1070a29913806d938ca049bf12c865e57d2789
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-<<<<<<< HEAD
     private void tablaAreaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAreaMouseClicked
        
         
@@ -404,33 +377,5 @@ public class VentanaReporteInteligente extends javax.swing.JFrame {
     private javax.swing.JTable tablaArea;
     private javax.swing.JTable tablaEmpleados;
     private javax.swing.JTable tablaNuevaArea;
-=======
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new VentanaReporteInteligente().setVisible(true));
-    }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
->>>>>>> ae1070a29913806d938ca049bf12c865e57d2789
     // End of variables declaration//GEN-END:variables
 }
