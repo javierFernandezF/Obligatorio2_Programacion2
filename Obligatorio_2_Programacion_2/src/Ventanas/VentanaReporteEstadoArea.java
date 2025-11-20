@@ -69,7 +69,7 @@ public class VentanaReporteEstadoArea extends javax.swing.JFrame implements Obse
                 if (value instanceof Area) {
                     Area a = (Area) value;
                     int pctRedondeado = (int)Math.round(sistema.porcentajeAsignado(a));
-lbl.setText("• " + a.getNombre());
+                    lbl.setText("• " + a.getNombre());
 
                     if (!isSelected) {
                         if (pctRedondeado > 90.0)      lbl.setBackground(new Color(255,153,153)); // rojo claro
@@ -110,7 +110,7 @@ lbl.setText("• " + a.getNombre());
 
     private void actualizarDetalle(Area area) {
         int pctRedondeado = (int)Math.round(sistema.porcentajeAsignado(area));
-lblDetalle.setText("Área: " + area.getNombre() + " — " + pctRedondeado + "%");
+        lblDetalle.setText("Área: " + area.getNombre() + " — " + pctRedondeado + "%");
 
         List<Empleado> empleados = sistema.getEmpleadosDe(area); // ya viene ordenado por nombre
         pnlEmpleados.removeAll();
@@ -183,6 +183,7 @@ lblDetalle.setText("Área: " + area.getNombre() + " — " + pctRedondeado + "%")
         lblDetalle = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Reporte de estado de áreas");
 
         jLabel1.setText("Area");
 

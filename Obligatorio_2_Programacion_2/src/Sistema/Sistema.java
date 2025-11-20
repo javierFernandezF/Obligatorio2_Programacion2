@@ -212,9 +212,19 @@ public class Sistema extends Observable implements Serializable{
     }
 
     public double porcentajeAsignado(Area a) {
+        
+        /*
         double presu = a.getPresupuesto();
         if (presu <= 0) return 0.0;
         return (totalAsignado(a) * 100.0) / presu;
+        */
+        
+        //Cambie aca paara tener en cuenta cuando un empleado tiene meses en varias areas
+        double presupuesto = a.getPresupuesto();
+        double presupuestoUsado = this.listaCambioArea.calcularPresupuestoUsadoPorArea(a);
+        
+        return (presupuestoUsado*100)/presupuesto;
+        
     }
 
     public ArrayList<Area> getAreasOrdenadasPorPorcentajeDesc() {
