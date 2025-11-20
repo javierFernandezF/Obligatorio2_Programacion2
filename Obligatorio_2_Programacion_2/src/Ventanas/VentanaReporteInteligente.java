@@ -327,10 +327,7 @@ public class VentanaReporteInteligente extends javax.swing.JFrame {
                 } catch (Exception e) {
                     String errorMsg = "Error al generar el reporte: " + e.getMessage();
                     errorMsg += "\n\nVerifique que:\n" +
-                               "1. La variable de entorno ERP_API_KEY esté configurada\n" +
-                               "2. Tenga conexión a internet\n" +
-                               "3. La API key de Gemini sea válida\n" +
-                               "4. La librería google-genai esté en el classpath";
+                               "1. La variable de entorno ERP_API_KEY esté configurada\n";
                     jTextArea1.setText(errorMsg);
                 } finally {
                     jButton1.setEnabled(true);
