@@ -11,6 +11,8 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  *
@@ -19,6 +21,7 @@ import java.nio.charset.StandardCharsets;
 public class ServicioGemini {
     private static final String API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
     private final String apiKey;
+    private final Gson gson;
     
     public ServicioGemini() {
         // Verificar que la API key esté configurada
@@ -26,28 +29,26 @@ public class ServicioGemini {
         if (apiKey == null || apiKey.isEmpty()) {
             throw new IllegalStateException("La variable de entorno ERP_API_KEY no está configurada");
         }
-    }
-    
-    // Sobrecarga para mantener compatibilidad con la versión original
-    public String generarReporteInteligente(String areaOrigen, String descripcionOrigen, 
-                                          String areaDestino, String cvEmpleado) throws Exception {
-        return generarReporteInteligente(areaOrigen, descripcionOrigen, areaDestino, "", cvEmpleado);
+        
+        // Inicializar Gson
+        this.gson = new GsonBuilder().setPrettyPrinting().create();
     }
     
     public String generarReporteInteligente(String areaOrigen, String descripcionOrigen, 
                                           String areaDestino, String descripcionDestino, 
                                           String cvEmpleado) throws Exception {
         
-        String prompt = construirPrompt(areaOrigen, descripcionOrigen, areaDestino, descripcionDestino, cvEmpleado);
+        String prompt = construirPrompt(areaOrigen, areaDestino, cvEmpleado);
         
         try {
-            // Construir el JSON de la petición
-            String jsonRequest = construirJsonRequest(prompt);
+            // Crear JSON usando Gson de forma simple
+            String jsonRequest = crearJsonConGson(prompt);
             
             // Realizar la petición HTTP a Gemini 2.5 Flash
-            URL url = new URL(API_URL + "?key=" + apiKey);
+            URL url = new URL(API_URL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
+            connection.setRequestProperty("x-goog-api-key", apiKey);
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setDoOutput(true);
             
@@ -59,6 +60,7 @@ public class ServicioGemini {
             
             // Leer la respuesta
             int responseCode = connection.getResponseCode();
+            
             if (responseCode == 200) {
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
                     StringBuilder response = new StringBuilder();
@@ -67,7 +69,11 @@ public class ServicioGemini {
                         response.append(line);
                     }
                     
-                    return extraerTextoRespuesta(response.toString());
+                    String responseStr = response.toString();
+                    
+                    // Parsear respuesta con Gson (simple)
+                    String texto = extraerTextoConGson(responseStr);
+                    return texto;
                 }
             } else {
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getErrorStream(), StandardCharsets.UTF_8))) {
@@ -76,7 +82,9 @@ public class ServicioGemini {
                     while ((line = reader.readLine()) != null) {
                         error.append(line);
                     }
-                    throw new Exception("Error en la API de Gemini (" + responseCode + "): " + error.toString());
+                    String errorStr = error.toString();
+                    
+                    throw new Exception("Error en la API de Gemini (" + responseCode + "): " + errorStr);
                 }
             }
         } catch (IOException e) {
@@ -84,71 +92,72 @@ public class ServicioGemini {
         }
     }
     
-    private String construirPrompt(String areaOrigen, String descripcionOrigen, 
-                                 String areaDestino, String descripcionDestino, 
+    private String construirPrompt(String areaOrigen,  
+                                 String areaDestino, 
                                  String cvEmpleado) {
-        return "Eres un consultor de recursos humanos experto. Analiza el siguiente escenario de movimiento de empleado:\n\n" +
-               "ÁREA DE ORIGEN:\n" +
-               "Nombre: " + areaOrigen + "\n" +
-               "Descripción: " + descripcionOrigen + "\n\n" +
-               "ÁREA DE DESTINO:\n" +
-               "Nombre: " + areaDestino + "\n" +
-               "Descripción: " + descripcionDestino + "\n\n" +
-               "PERFIL DEL EMPLEADO:\n" +
-               cvEmpleado + "\n\n" +
-               "Por favor, proporciona un análisis detallado que incluya:\n" +
-               "1. VENTAJAS del movimiento (mínimo 3 puntos)\n" +
-               "2. DESVENTAJAS del movimiento (mínimo 3 puntos)\n" ;
+        return "Empleado: " + cvEmpleado + ". Cambio: " + areaOrigen + "→" + areaDestino + 
+               ". Responde SOLO con formato: VENTAJAS: 1. 2. 3. DESVENTAJAS: 1. 2. 3. Máximo 50 palabras total.";
     }
     
-    private String construirJsonRequest(String prompt) {
-        // Escapar comillas en el prompt
-        String promptEscapado = prompt.replace("\\", "\\\\")
-                                     .replace("\"", "\\\"") 
-                                     .replace("\n", "\\n")
-                                     .replace("\r", "\\r")
-                                     .replace("\t", "\\t");
+    
+    // Método simple para crear JSON con Gson
+    private String crearJsonConGson(String prompt) {
+        // Crear un Map simple para el JSON
+        java.util.Map<String, Object> request = new java.util.HashMap<>();
         
-        return "{" +
-               "\"contents\": [" +
-               "{" +
-               "\"parts\": [" +
-               "{" +
-               "\"text\": \"" + promptEscapado + "\"" +
-               "}" +
-               "]" +
-               "}" +
-               "]," +
-               "\"generationConfig\": {" +
-               "\"temperature\": 0.7," +
-               "\"topK\": 40," +
-               "\"topP\": 0.95," +
-               "\"maxOutputTokens\": 2048" +
-               "}" +
-               "}";
+        // Contents
+        java.util.Map<String, Object> part = new java.util.HashMap<>();
+        part.put("text", prompt);
+        
+        java.util.Map<String, Object> content = new java.util.HashMap<>();
+        content.put("parts", java.util.Arrays.asList(part));
+        
+        request.put("contents", java.util.Arrays.asList(content));
+        
+        // GenerationConfig
+        java.util.Map<String, Object> config = new java.util.HashMap<>();
+        config.put("temperature", 0.7);
+        config.put("topK", 40);
+        config.put("topP", 0.95);
+        config.put("maxOutputTokens", 512);
+        
+        // ThinkingConfig para deshabilitar el pensamiento automático
+        java.util.Map<String, Object> thinkingConfig = new java.util.HashMap<>();
+        thinkingConfig.put("thinkingBudget", 0);
+        config.put("thinkingConfig", thinkingConfig);
+        
+        request.put("generationConfig", config);
+        
+        // SystemInstruction
+        java.util.Map<String, Object> systemPart = new java.util.HashMap<>();
+        systemPart.put("text", "SÉ BREVE. NO pienses. NO expliques. SOLO responde el formato pedido.");
+        
+        java.util.Map<String, Object> systemInstruction = new java.util.HashMap<>();
+        systemInstruction.put("parts", java.util.Arrays.asList(systemPart));
+        request.put("systemInstruction", systemInstruction);
+        
+        return gson.toJson(request);
     }
     
-    private String extraerTextoRespuesta(String jsonResponse) {
+    // Método simple para extraer texto con Gson
+    private String extraerTextoConGson(String jsonResponse) {
         try {
-            // Buscar el texto de respuesta en el JSON manualmente
-            String textMarker = "\"text\":\"";
-            int startIndex = jsonResponse.indexOf(textMarker);
-            if (startIndex != -1) {
-                startIndex += textMarker.length();
-                int endIndex = jsonResponse.indexOf("\"", startIndex);
-                if (endIndex != -1) {
-                    String texto = jsonResponse.substring(startIndex, endIndex);
-                    // Desescapar caracteres
-                    return texto.replace("\\n", "\n")
-                               .replace("\\r", "\r")
-                               .replace("\\t", "\t")
-                               .replace("\\\"", "\"")
-                               .replace("\\\\", "\\");
+            java.util.Map response = gson.fromJson(jsonResponse, java.util.Map.class);
+            java.util.List candidates = (java.util.List) response.get("candidates");
+            if (candidates != null && !candidates.isEmpty()) {
+                java.util.Map candidate = (java.util.Map) candidates.get(0);
+                java.util.Map content = (java.util.Map) candidate.get("content");
+                if (content != null) {
+                    java.util.List parts = (java.util.List) content.get("parts");
+                    if (parts != null && !parts.isEmpty()) {
+                        java.util.Map part = (java.util.Map) parts.get(0);
+                        return (String) part.get("text");
+                    }
                 }
             }
             return "No se pudo obtener respuesta de la API";
         } catch (Exception e) {
-            return "Error al procesar la respuesta: " + e.getMessage();
+            return "Error al procesar respuesta: " + e.getMessage();
         }
     }
 }
